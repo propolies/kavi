@@ -37,7 +37,7 @@ class Middleware<Context extends object & { event: RequestEvent | undefined }> {
   }
 
   call = <Return>(fn: (ctx: ReturnType<typeof this.getContext>) => Return) => {
-    return (ctx: ReturnType<typeof this.getContext>) => fn(this.getContext())
+    return () => fn(this.getContext())
   }
 }
 
