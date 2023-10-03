@@ -25,19 +25,15 @@ class Middleware<Context extends object & { event: RequestEvent | undefined }> {
   }
   
   params = <Params>() => {
-    type Ctx = ReturnType<typeof this.getContext>
     return {
-      call: <Return>(fn: (input: {ctx: Ctx, params: Params }) => Return) => {
-        return (params: Params) => fn({
-          params,
-          ctx: this.getContext()
-        })
+      call: <Return>(fn: (params: Params, ctx: Context) => Return) => {
+        return (params: Params) => fn(params, this.getContext())
       }
     }
   }
 
-  call = <Return>(fn: (ctx: ReturnType<typeof this.getContext>) => Return) => {
-    return (ctx: ReturnType<typeof this.getContext>) => fn(this.getContext())
+  call = <Return>(fn: (ctx: Context) => Return) => {
+    return () => fn(this.getContext())
   }
 }
 

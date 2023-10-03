@@ -1,6 +1,6 @@
 {
   "name": "@hot-api/core",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
@@ -9,8 +9,12 @@
   "exports": {
     ".": "./dist/index.js"
   },
-  "author": "",
-  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/propolies/hot-api"
+  },
+  "author": "propolies",
+  "license": "MIT",
   "peerDependencies": {
     "@sveltejs/kit": "^1.25.1",
     "svelte": "^4.0.0"
