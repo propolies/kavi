@@ -1,6 +1,6 @@
 {
-  "name": "@hot-api/core",
-  "version": "0.0.3",
+  "name": "@svelte-api/core",
+  "version": "0.0.1",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/propolies/hot-api"
+    "url": "https://github.com/propolies/svelte-api"
   },
   "author": "propolies",
   "license": "MIT",
