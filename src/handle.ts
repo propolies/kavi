@@ -50,6 +50,5 @@ const getDeepKeys = (obj: object) => {
       res[key] = ""
     }
   })
-  console.log(res)
   return res
 }
