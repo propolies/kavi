@@ -4,6 +4,8 @@ export const createClientRouter = async <R extends Object>() => {
   return createRouter(Object.entries(routerKeys), []) as Pretty<ToPromise<R>>
 }
 
+export type Client<Router extends Object> = Awaited<ReturnType<typeof createClientRouter<Router>>>
+
 const createRouter = (entries: [string, object | ""][], path: string[]): object => Object.fromEntries(entries.map(([route, value]) => {
   return [route, value ? createRouter(Object.entries(value),  [...path, route]) : createFetcher([...path, route]) ]
 }))
