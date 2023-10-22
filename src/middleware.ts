@@ -36,9 +36,10 @@ class Middleware<Context extends object & { event: RequestEvent | undefined }> {
     return () => fn(this.getContext())
   }
 
-  chain = <Mw extends Middleware<any>>(mw: Mw) => {
+  chain = <Ctx extends {event: RequestEvent}>(mw: Middleware<Ctx>) => {
     const getContext = this.getContext
-    const newMiddleware = new Middleware<any>();
+    let x = mw.getContext
+    const newMiddleware = new Middleware<Context & ReturnType<typeof mw.getContext>>();
 
     newMiddleware.getContext = () =>  {
       return {
