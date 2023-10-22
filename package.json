@@ -19,7 +19,7 @@
     "@sveltejs/kit": "^1.25.1",
     "svelte": "^4.0.0"
   },
-  "dependencies": {
+  "devDependencies": {
     "typescript": "^5.2.2"
   },
   "description": ""
