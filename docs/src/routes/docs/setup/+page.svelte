@@ -25,7 +25,7 @@ export type Router = typeof router
 `} />
 
 <Code directory="client.ts" code={`
-import { createClientRouter, type Client } from '@svelte-api/core'
+import type { Client } from '@svelte-api/core'
 import type { Router } from './router'
 
 export let r: Client<Router>
