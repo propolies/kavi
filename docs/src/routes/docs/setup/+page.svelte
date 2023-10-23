@@ -8,13 +8,14 @@
 <p>
   This is the structure needed.
 </p>
-<Code code= {`
+<Code lang="bash" code= {`
 src/
   hooks.client.ts 
   hooks.server.ts 
-  /sapi/
-    client.ts 
-    router.ts 
+  lib/
+    /sapi/
+      client.ts 
+      router.ts 
 `} />
 <Code directory="router.ts" code={`
 export const router = { 
@@ -35,14 +36,14 @@ export async function initClientRouter(getClient: () => Promise<Client<Router>>)
 
 <Code directory="hooks.server.ts" code={`
 import { createHandle } from '@svelte-api/core'
-import { router } from 'sapi/router'
+import { router } from '$lib/sapi/router'
 
 export const handle = createHandle(router)
 `} />
 
 <Code directory="hooks.client.ts" code={`
 import { createClientRouter } from '@svelte-api/core'
-import { initClientRouter } from 'sapi/client'
+import { initClientRouter } from '$lib/sapi/client'
 
 initClientRouter(createClientRouter)
 `} />
