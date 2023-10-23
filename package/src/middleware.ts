@@ -1,27 +1,20 @@
 import type { RequestEvent } from "@sveltejs/kit"
 
-class Middleware<Context extends object & { event: RequestEvent | undefined }> {
-  event: RequestEvent | undefined = undefined
+class Middleware<Context extends object> {
   private getContext: () => Context
 
-  constructor() {
-    this.getContext = () => {
-      return { event: this.event } as Context
-    }
+  constructor(ctx: () => Context) {
+    this.getContext = ctx
   }
 
-  use<NewContext extends object>(createContext: (input: Context) => NewContext): Middleware<Context & NewContext> {
+  use = <NewContext extends object>(createContext: (input: Context) => NewContext): Middleware<Context & NewContext> => {
     const getContext = this.getContext
-    const newMiddleware = new Middleware<Context & NewContext>();
-
-    newMiddleware.getContext = () =>  {
-      const context = getContext()
+    return new Middleware<Context & NewContext>(() => {
       return {
-        ...context,
-        ...createContext(context)
+        ...getContext(),
+        ...createContext(getContext())
       }
-    };
-    return newMiddleware;
+    });
   }
   
   params = <Params>() => {
@@ -38,20 +31,31 @@ class Middleware<Context extends object & { event: RequestEvent | undefined }> {
 
   chain = <Ctx extends {event: RequestEvent}>(mw: Middleware<Ctx>) => {
     const getContext = this.getContext
-    let x = mw.getContext
-    const newMiddleware = new Middleware<Context & ReturnType<typeof mw.getContext>>();
-
-    newMiddleware.getContext = () =>  {
+    return new Middleware<Context & ReturnType<typeof mw.getContext>>(() => {
       return {
         ...getContext(),
         ...mw.getContext()
       }
-    };
-    return newMiddleware;
+    });
   }
 }
 
-export const middleware = new Middleware()
+type EventContext = { event: RequestEvent | undefined }
+class EventMiddleware {
+  event: RequestEvent | undefined
+
+  use = <Context extends object>(createContext: (input: EventContext) => Context): Middleware<Context> => {
+    const getEvent = () => this.event
+    return new Middleware<Context & EventContext>(() => {
+      return {
+        event: getEvent(),
+        ...createContext({ event: getEvent() })
+      }
+    });
+  }
+}
+
+export const middleware = new EventMiddleware()
 export const context = middleware.use(({ event }) => {
   if (!event) throw new Error("Event not found")
   
