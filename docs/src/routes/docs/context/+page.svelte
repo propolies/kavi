@@ -2,9 +2,7 @@
   import Code from "$lib/components/code.svelte";
 </script>
 
-<h1>
-  Context <a href="/docs/context-example">example</a>
-</h1>
+<h1>Context</h1>
 <p>
   Notice how the built-in <code>context</code> middleware has access to the <code>event</code>. This can be reused to create custom middleware/context for a call.
 </p>

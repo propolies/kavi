@@ -15,8 +15,8 @@
       "Context",
       "Nesting"
     ]} />
-  <Dropdown onClick={() => goto("/docs/context-example")} 
+  <Dropdown onClick={() => goto("/docs/simple-example")} 
     name="Examples" items={[
-      "Context-example"
+      "Simple-example"
     ]} />
 </div>
