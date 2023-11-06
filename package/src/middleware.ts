@@ -58,9 +58,8 @@ class EventMiddleware {
 export const middleware = new EventMiddleware()
 export const context = middleware.use(({ event }) => {
   if (!event) throw new Error("Event not found")
-  
   return {
-    event: event,
+    event
   }
 })
 export type MiddlewareType = typeof middleware

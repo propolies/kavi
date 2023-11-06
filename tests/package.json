@@ -1,0 +1,18 @@
+{
+  "name": "tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "ts-node test.ts",
+    "link": "npm link ../package"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@sveltejs/kit": "^1.27.3",
+    "ts-node": "^10.9.1",
+    "tsafe": "^1.6.5",
+    "typescript": "^5.2.2"
+  }
+}

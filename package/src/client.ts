@@ -1,12 +1,13 @@
-export const createClientRouter = async <R extends Object>() => {
+export const createClientRouter = async <R extends object>() => {
   const routerKeys = await fetch("/?api=getRouterKeys").then(res => res.json()) as object
   // @ts-ignore
   return createRouter(Object.entries(routerKeys), []) as Pretty<ToPromise<R>>
 }
 
-export type Client<Router extends Object> = Awaited<ReturnType<typeof createClientRouter<Router>>>
+export type Client<Router extends object> = Awaited<ReturnType<typeof createClientRouter<Router>>>
+type CreateRouter = (entries: [string, object | ""][], path: string[]) => object
 
-const createRouter = (entries: [string, object | ""][], path: string[]): object => Object.fromEntries(entries.map(([route, value]) => {
+const createRouter: CreateRouter = (entries, path) => Object.fromEntries(entries.map(([route, value]) => {
   return [route, value ? createRouter(Object.entries(value),  [...path, route]) : createFetcher([...path, route]) ]
 }))
 
