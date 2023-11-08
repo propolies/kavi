@@ -56,7 +56,20 @@ const router = {
         second: number
       }
       assert<Equals<ExpectedCtx, Ctx>>()
-    })
+    }),
+
+  // Test nesting
+  parent: {
+    child: context
+      .call(ctx => {
+        // Test context
+      type Ctx = typeof ctx
+      type ExpectedCtx = {
+        event: RequestEvent
+      }
+      assert<Equals<ExpectedCtx, Ctx>>()
+      })
+  }
 }
 
 // Test router
@@ -64,6 +77,9 @@ type R = Client<typeof router>
 type ExpectedR = {
   call: () => Promise<number>,
   params: (n: number) => Promise<void>,
-  chain: () => Promise<void>
+  chain: () => Promise<void>,
+  parent: {
+    child: () => Promise<void>
+  }
 }
 assert<Equals<ExpectedR, R>>()
