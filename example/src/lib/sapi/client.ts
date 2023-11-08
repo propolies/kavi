@@ -1,7 +1,4 @@
-import type { Client } from '@svelte-api/core'
-import type { Router } from './router'
+import type { Router } from "$lib/sapi/router"
+import { createClientRouter, type ToPromise, type Pretty } from "@svelte-api/core"
 
-export let r: Client<Router>
-export async function initClientRouter(getClient: () => Promise<Client<Router>>) {
-  r = await getClient()
-}
+export let r = createClientRouter<Pretty<ToPromise<Router>>>()

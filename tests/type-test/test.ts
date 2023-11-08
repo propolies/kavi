@@ -1,6 +1,6 @@
 import { assert, Equals } from 'tsafe'
 import type { RequestEvent } from '@sveltejs/kit'
-import { context, type Client } from '@svelte-api/core'
+import { context, createClientRouter, type Pretty, type ToPromise } from '@svelte-api/core'
 
 const first = context.use(() => {
   return {
@@ -73,7 +73,7 @@ const router = {
 }
 
 // Test router
-type R = Client<typeof router>
+type R = ReturnType<typeof createClientRouter<Pretty<ToPromise<typeof router>>>>
 type ExpectedR = {
   call: () => Promise<number>,
   params: (n: number) => Promise<void>,
