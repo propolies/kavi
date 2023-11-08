@@ -7,11 +7,6 @@ export const createHandle = (router: any): Handle => {
     const api = searchParams.get('api')
   
     if (pathname.startsWith('/') && api) {
-      if (api === "getRouterKeys") {
-        const keys = getDeepKeys(router)
-        return new Response(JSON.stringify(keys))
-      }
-      
       middleware.event = event
       let reqBody = await event.request.json().catch(() => '')
       
