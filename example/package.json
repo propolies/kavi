@@ -20,6 +20,6 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@svelte-api/core": "^0.1.0"
+		"@svelte-api/core": "^0.1.1"
 	}
 }

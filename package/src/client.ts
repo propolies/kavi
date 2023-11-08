@@ -13,7 +13,7 @@ export const createClientRouter = <Router extends object>(props: string[] = []):
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(args)
+        body: JSON.stringify(args[0])
       }).then(res => res.json())
     }
   })
