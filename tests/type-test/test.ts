@@ -69,7 +69,11 @@ const router = {
       }
       assert<Equals<ExpectedCtx, Ctx>>()
       })
-  }
+  },
+
+  // Test async
+  asfn: context
+    .call(async () => {})
 }
 
 // Test router
@@ -80,6 +84,8 @@ type ExpectedR = {
   chain: () => Promise<void>,
   parent: {
     child: () => Promise<void>
-  }
+  },
+
+  asfn:() => Promise<void>
 }
 assert<Equals<ExpectedR, R>>()
