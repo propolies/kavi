@@ -22,7 +22,7 @@ export const createClientRouter = <Router extends object>(props: string[] = []):
 export type Pretty<T> = T extends Function ? T : { [K in keyof T]: Pretty<T[K]> } & {};
 export type ToPromise<T extends object> = {
   [K in keyof T]: T[K] extends (...args: infer Args) => infer R 
-    ? R extends Promise<any> ? R : (...args: Args) => Promise<R>
+    ? R extends Promise<any> ? (...args: Args) => R : (...args: Args) => Promise<R>
     : (
       T[K] extends Object 
         ? ToPromise<T[K]>
