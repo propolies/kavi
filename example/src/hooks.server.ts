@@ -1,4 +1,4 @@
-import { createHandle } from '@svelte-api/core'
-import { router } from '$lib/sapi/router'
+import { createHandle } from 'svelte-api'
+import { router } from './sapi/router'
 
 export const handle = createHandle(router)

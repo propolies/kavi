@@ -1,17 +1,23 @@
 import { assert, Equals } from 'tsafe'
-import type { RequestEvent } from '@sveltejs/kit'
-import { context, createClientRouter, type Pretty, type ToPromise } from '@svelte-api/core'
+import type { Cookies, RequestEvent } from '@sveltejs/kit'
+import { context, createClientRouter, type Pretty, type ToPromise } from 'svelte-api'
 
 const first = context.use(() => {
   return {
     first: 1
   }
 })
+
 const second = context.use(() => {
   return {
     second: 2
   }
 })
+
+type Context = {
+  event: RequestEvent,
+  cookies: Cookies
+}
 
 const router = {
   // Test call
@@ -19,23 +25,17 @@ const router = {
   .call(ctx => {
     // Test context
     type Ctx = typeof ctx
-    type ExpectedCtx = {
-      event: RequestEvent
-    }
-    assert<Equals<ExpectedCtx, Ctx>>()
+    assert<Equals<Context, Ctx>>()
     return 1
   }),
 
-  // Test params
-  params: context
-    .params<number>()
+  // Test args
+  args: context
+    .args<number>()
     .call((input, ctx) => {
       // Test context
       type Ctx = typeof ctx
-      type ExpectedCtx = {
-        event: RequestEvent
-      }
-      assert<Equals<ExpectedCtx, Ctx>>()
+      assert<Equals<Context, Ctx>>()
 
       // Test input
       type Input = typeof input
@@ -50,8 +50,7 @@ const router = {
     .call(ctx => {
       // Test context
       type Ctx = typeof ctx
-      type ExpectedCtx = {
-        event: RequestEvent,
+      type ExpectedCtx = Context & {
         first: number,
         second: number
       }
@@ -64,10 +63,7 @@ const router = {
       .call(ctx => {
         // Test context
       type Ctx = typeof ctx
-      type ExpectedCtx = {
-        event: RequestEvent
-      }
-      assert<Equals<ExpectedCtx, Ctx>>()
+      assert<Equals<Context, Ctx>>()
       })
   },
 
@@ -79,13 +75,12 @@ const router = {
 // Test router
 type R = ReturnType<typeof createClientRouter<Pretty<ToPromise<typeof router>>>>
 type ExpectedR = {
-  call: () => Promise<number>,
-  params: (n: number) => Promise<void>,
-  chain: () => Promise<void>,
+  call: (event: RequestEvent) => Promise<number>,
+  args: (event: RequestEvent, n: number) => Promise<void>,
+  chain: (event: RequestEvent) => Promise<void>,
   parent: {
-    child: () => Promise<void>
+    child: (event: RequestEvent) => Promise<void>
   },
-
-  asfn:() => Promise<void>
+  asfn:(event: RequestEvent) => Promise<void>
 }
 assert<Equals<ExpectedR, R>>()

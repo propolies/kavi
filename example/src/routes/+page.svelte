@@ -1,22 +1,33 @@
 <script lang="ts">
-  import { r } from "$lib/sapi/client";
-  import { onMount } from "svelte";
+  import { r } from "../sapi/client";
 </script>
 
 <button on:click={async () => {
-  console.log("recieved", await r.one(), "from the server")
+  console.log(await r.one())
 }}>
-  call one
+  call
 </button>
 
 <button on:click={async () => {
-  console.log("recieved", await r.multiply([3, 4]), "from the server")
+  console.log(await r.add([1, 3]))
 }}>
-  call multiply
+  call, args
 </button>
 
 <button on:click={async () => {
-  console.log("recieved", await r.oneTwoThree(), "from the server")
+  await r.cookies.set()
 }}>
-  call oneTwoThree
+  set cookies
+</button>
+
+<button on:click={async () => {
+  await r.cookies.delete()
+}}>
+  delete cookies
+</button>
+
+<button on:click={async () => {
+  console.log(await r.cookies.get())
+}}>
+  get cookies
 </button>

@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "example": "cd example && pnpm dev",
+    "example-i": "cd example && pnpm install",
+    "example-dev": "cd example && pnpm dev",
+    "dev": "cd example && pnpm dev",
+    "install": "",
+    "build": "cd package && pnpm build"
+  }
+}
