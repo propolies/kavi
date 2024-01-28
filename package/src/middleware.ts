@@ -1,4 +1,9 @@
 import type { RequestEvent } from "@sveltejs/kit"
+import type { Schema } from 'zod'
+
+type SchemaReturn<T extends Schema> = T extends { parse: (...args: infer Args) => infer R }
+  ? R
+  : number
 
 class Middleware<Context extends { event: RequestEvent }> {
   constructor(private getContext: (event: RequestEvent) => Context) {}
@@ -13,11 +18,17 @@ class Middleware<Context extends { event: RequestEvent }> {
     });
   }
   
-  args = <Args>() => ({
-    call: <Return>(fn: (args: Args, ctx: Context) => Return) => {
-      return (event: RequestEvent, args: Args) => fn(args, this.getContext(event))
+  args<S extends Schema>(schema: S) {
+    type Args = SchemaReturn<S>
+    return {
+      call: <Return>(fn: (args: Args, ctx: Context) => Return) => {
+        return (event: RequestEvent, args: Args) => {
+          const parsedArgs: Args = schema.parse(args)
+          return fn(parsedArgs, this.getContext(event))
+        }
+      }
     }
-  })
+  }
 
   call<Return>(fn: (ctx: Context & { event: RequestEvent }) => Return) {
     return (event: RequestEvent) => fn(this.getContext(event))

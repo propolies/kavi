@@ -1,4 +1,5 @@
 import { context } from "svelte-api"
+import z from 'zod'
 
 export const router = { 
   one: context
@@ -7,10 +8,10 @@ export const router = {
       return 1
     }),
   add: context
-    .args<[number, number]>()
+    .args(z.tuple([ z.number(), z.number() ]))
     .call(([a, b]) => {
-      console.log(a + b)
-      return a + b
+    console.log(a + b)
+    return a + b
     }),
   cookies: {
     set: context

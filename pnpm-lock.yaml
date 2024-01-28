@@ -13,6 +13,9 @@ importers:
       svelte-api:
         specifier: workspace:0.0.0-pre.2
         version: link:../package
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
     devDependencies:
       '@sveltejs/adapter-auto':
         specifier: ^3.0.0
@@ -47,6 +50,9 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.3.3
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
 
   tests/type:
     dependencies:
@@ -62,6 +68,9 @@ importers:
       typescript:
         specifier: ^5.2.2
         version: 5.3.3
+      zod:
+        specifier: ^3.22.4
+        version: 3.22.4
 
 packages:
 
@@ -1564,3 +1573,6 @@ packages:
   /wrappy@1.0.2:
     resolution: {integrity: sha512-l4Sp/DRseor9wL6EvV2+TuQn63dMkPjZ/sp9XkghTEbV9KlPS1xUsZ3u7/IQO4wxtcFB4bgpQPRcR3QCvezPcQ==}
     dev: true
+
+  /zod@3.22.4:
+    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}

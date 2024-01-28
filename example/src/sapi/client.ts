@@ -1,4 +1,4 @@
 import type { Router } from "./router"
-import { createClientRouter, type ToPromise, type Pretty } from "svelte-api"
+import { createClientRouter, type ClientRouter } from "svelte-api"
 
-export let r = createClientRouter<Pretty<ToPromise<Router>>>()
+export let r = createClientRouter<ClientRouter<Router>>()

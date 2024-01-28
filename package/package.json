@@ -17,6 +17,7 @@
   "license": "MIT",
   "devDependencies": {
     "@sveltejs/kit": "^2.0.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "zod": "^3.22.4"
   }
 }

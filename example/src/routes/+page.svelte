@@ -9,7 +9,7 @@
 </button>
 
 <button on:click={async () => {
-  console.log(await r.add([1, 3]))
+  console.log(await r.add([1, 2]))
 }}>
   call, args
 </button>

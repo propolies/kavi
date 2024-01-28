@@ -1,6 +1,7 @@
 import { assert, Equals } from 'tsafe'
 import type { Cookies, RequestEvent } from '@sveltejs/kit'
-import { context, createClientRouter, type Pretty, type ToPromise } from 'svelte-api'
+import { context, createClientRouter, type ClientRouter } from 'svelte-api'
+import z from 'zod'
 
 const first = context.use(() => {
   return {
@@ -31,7 +32,7 @@ const router = {
 
   // Test args
   args: context
-    .args<number>()
+    .args(z.number())
     .call((input, ctx) => {
       // Test context
       type Ctx = typeof ctx
@@ -72,15 +73,15 @@ const router = {
     .call(async () => {})
 }
 
-// Test router
-type R = ReturnType<typeof createClientRouter<Pretty<ToPromise<typeof router>>>>
+// Test client router
+type R = ReturnType<typeof createClientRouter<ClientRouter<typeof router>>>
 type ExpectedR = {
-  call: (event: RequestEvent) => Promise<number>,
-  args: (event: RequestEvent, n: number) => Promise<void>,
-  chain: (event: RequestEvent) => Promise<void>,
+  call: () => Promise<number>,
+  args: (n: number) => Promise<void>,
+  chain: () => Promise<void>,
   parent: {
-    child: (event: RequestEvent) => Promise<void>
+    child: () => Promise<void>
   },
-  asfn:(event: RequestEvent) => Promise<void>
+  asfn:() => Promise<void>
 }
 assert<Equals<ExpectedR, R>>()

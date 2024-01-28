@@ -1,3 +1,5 @@
+import type { RequestEvent } from "@sveltejs/kit";
+
 export type Pretty<T> = T extends Function ? T : { [K in keyof T]: Pretty<T[K]> } & {};
 
 export type ToAsync<T extends Function> = T extends (...args: infer Args) => (Promise<infer R> | infer R)
@@ -13,3 +15,15 @@ export type ToPromise<T extends object> = {
         : never
     )
 }
+
+export type ExcludeEvent<T extends object> = {
+  [K in keyof T]: T[K] extends (event: RequestEvent, ...args: infer Args) => infer R
+    ? (...args: Args) => R
+    : (
+      T[K] extends Object 
+        ? ExcludeEvent<T[K]>
+        : never
+    )
+}
+
+export type ClientRouter<R extends object> = Pretty<ToPromise<ExcludeEvent<R>>>

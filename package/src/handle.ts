@@ -2,7 +2,10 @@ import type { Handle } from "@sveltejs/kit"
 import { ToAsync } from "./types.js"
 import { BetterCookies } from "./cookies.js"
 
-export function createHandle(router: any): Handle {
+
+export function createHandle(router: object): Handle {
+  // create wss - happens on hooks startup
+
   return async ({ event, resolve }) => {
     const { searchParams, pathname } = event.url
     const api = searchParams.get('api')
