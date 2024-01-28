@@ -5,6 +5,7 @@ export const router = {
   one: context
     .call(() => {
       console.log(1)
+      console.log("this", this)
       return 1
     }),
   add: context

@@ -1,51 +1,85 @@
 import type { RequestEvent } from "@sveltejs/kit"
-import type { Schema } from 'zod'
+import type { Primitive, Schema } from 'zod'
 
-type SchemaReturn<T extends Schema> = T extends { parse: (...args: infer Args) => infer R }
+type SchemaReturn<T extends Schema> = T extends { parse: (...args: any[]) => infer R }
   ? R
   : number
 
-class Middleware<Context extends { event: RequestEvent }> {
-  constructor(private getContext: (event: RequestEvent) => Context) {}
+type CtxIn = {
+  path: string
+}
 
-  use<NewContext extends object>(createContext: (input: Context) => NewContext): Middleware<Context & NewContext> {
-    const getContext = this.getContext
-    return new Middleware<Context & NewContext>((event: RequestEvent) => {
-      return {
-        ...getContext(event),
-        ...createContext(getContext(event))
-      }
-    });
-  }
+type Exact<A, B> = (<T>() => T extends A ? 1 : 0) extends (<T>() => T extends B ? 1 : 0)
+    ? (A extends B ? (B extends A ? unknown : never) : never)
+    : never
+
+type CleanParams<T extends (arg: never) => unknown> = T extends (arg: infer Arg) => infer R
+  ? Exact<Arg, unknown> extends 0
+    ? T
+    : () => R
+  : never
+
+const createMiddleware = <Needs>() => class Middleware<Context> {
+  constructor(private getContext: (needs: Needs) => Context) {}
   
-  args<S extends Schema>(schema: S) {
-    type Args = SchemaReturn<S>
-    return {
-      call: <Return>(fn: (args: Args, ctx: Context) => Return) => {
-        return (event: RequestEvent, args: Args) => {
-          const parsedArgs: Args = schema.parse(args)
-          return fn(parsedArgs, this.getContext(event))
-        }
-      }
-    }
-  }
-
-  call<Return>(fn: (ctx: Context & { event: RequestEvent }) => Return) {
-    return (event: RequestEvent) => fn(this.getContext(event))
-  }
-
-  chain<Ctx extends {event: RequestEvent}>(mw: Middleware<Ctx>) {
+  use<NewContext>(createContext: (ctx: Context) => NewContext) {
     const getContext = this.getContext
-    return new Middleware<Context & ReturnType<typeof mw.getContext>>((event: RequestEvent) => {
+    return new Middleware((ctx: Needs) => {
+      const context = getContext(ctx)
       return {
-        ...getContext(event),
-        ...mw.getContext(event)
+        ...context,
+        ...createContext(context)
       }
     });
+  }
+
+  call<Return>(fn: (ctx: Context & CtxIn ) => Return) {
+    // Build step
+    return (ctxIn: CtxIn): CleanParams<(needs: Needs) => Return> => {
+      // Need step
+      return (...needs: Needs[]) => {
+        console.log("running")
+        const getContext = this.getContext
+        // Return step
+        return fn({
+          ...getContext(needs[0]),
+          ...ctxIn,
+        })
+      } 
+    }
   }
 }
 
-export const context = new Middleware((event) => ({
-  event,
-  cookies: event.cookies
-}))
+const context = new (createMiddleware<number>())((num: number) => ({ num }))
+const noContext = new (createMiddleware())(() => {})
+
+const c = context.use(({ num }) => {
+  return {
+    str: "heya"
+  }
+}).call(({ num, str }) => {
+  console.log(`[use-call]: num:${num} str:${str}`)
+})
+({ path: "r.path" })
+
+
+const x = context.call((ctx) => {
+  console.log("[call]: ctx:", ctx)
+  const { path, num } = ctx
+  console.log(`[call]: num:${num} path:${path}`)
+})
+({ path: "r.path" })
+(123)
+
+// context.call((ctx) => {
+//   console.log("[call]: ctx:", ctx)
+//   const { path, num } = ctx
+//   console.log(`[call]: num:${num} path:${path}`)
+// })
+// ({ path: "r.path" })
+// ()
+
+const cc = noContext.call((ctx) => {
+  console.log("[call]: ctx:", ctx)
+})
+({ path: "r.path" })

@@ -1,4 +1,5 @@
 import type { RequestEvent } from "@sveltejs/kit";
+import type { WebSocketServer } from "ws";
 
 export type Pretty<T> = T extends Function ? T : { [K in keyof T]: Pretty<T[K]> } & {};
 
@@ -27,3 +28,7 @@ export type ExcludeEvent<T extends object> = {
 }
 
 export type ClientRouter<R extends object> = Pretty<ToPromise<ExcludeEvent<R>>>
+
+export type ExtendedGlobal = typeof globalThis & {
+  wss: WebSocketServer
+}

@@ -3,6 +3,7 @@
     "example": "cd example && pnpm dev",
     "example-i": "cd example && pnpm install",
     "example-dev": "cd example && pnpm dev",
+    "example-build": "cd example && pnpm build",
     "dev": "cd example && pnpm dev",
     "install": "",
     "build": "cd package && pnpm build"

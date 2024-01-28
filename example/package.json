@@ -5,7 +5,8 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
-		"preview": "vite preview",
+    "start": "tsx server.ts",
+		"preview": "tsx server.ts --dev",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
 	},
@@ -21,7 +22,11 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@sveltejs/adapter-node": "^4.0.1",
+		"@types/ws": "^8.5.10",
 		"svelte-api": "workspace:0.0.0-pre.2",
+		"tsx": "^4.7.0",
+		"ws": "^8.16.0",
 		"zod": "^3.22.4"
 	}
 }
