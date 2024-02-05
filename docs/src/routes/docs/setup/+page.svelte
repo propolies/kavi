@@ -17,6 +17,9 @@ src/
       router.ts 
 `} />
 <Code directory="router.ts" code={`
+import { context } from "svelte-api"
+import z from 'zod'
+
 export const router = { 
   // Add api routes here
 }
@@ -24,14 +27,14 @@ export type Router = typeof router
 `} />
 
 <Code directory="client.ts" code={`
-import type { Router } from "$lib/sapi/router"
-import { createClientRouter, type ToPromise, type Pretty } from "@svelte-api/core"
+import type { Router } from "./router"
+import { createClientRouter, type ClientRouter } from "svelte-api"
 
-export let r = createClientRouter<Pretty<ToPromise<Router>>>()
+export let r = createClientRouter<ClientRouter<Router>>()
 `} />
 
 <Code directory="hooks.server.ts" code={`
-import { createHandle } from '@svelte-api/core'
+import { createHandle } from 'svelte-api'
 import { router } from '$lib/sapi/router'
 
 export const handle = createHandle(router)

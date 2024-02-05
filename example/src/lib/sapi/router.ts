@@ -1,15 +1,14 @@
 import { context } from "svelte-api"
 import z from 'zod'
 
-export const router = { 
+export const router = {
   one: context
     .call(() => {
       console.log(1)
-      console.log("this", this)
       return 1
     }),
   add: context
-    .args(z.tuple([ z.number(), z.number() ]))
+    .args(z.tuple([z.number(), z.number()]))
     .call(([a, b]) => {
     console.log(a + b)
     return a + b

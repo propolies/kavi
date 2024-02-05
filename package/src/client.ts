@@ -5,7 +5,7 @@ export const createClientRouter = <Router extends object>(props: string[] = []):
     get: (_, prop: string) => {
       return createClientRouter<Router>([...props, prop])
     },
-    apply: (target, _, args) => {
+    apply: async (target, _, args) => {
       // @ts-ignore
       const path: string[] = target()
       return fetch(`/svelte-api?api=${path.join(".")}`, {

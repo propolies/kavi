@@ -9,7 +9,7 @@
   To make server calls we need to use the default <code>context</code> object, which we will get more into in the <a href="/docs/context">context</a> section.
 </p>
 <Code directory="router.ts" code={`
-import { context } from '@svelte-api/core'
+import { context } from 'svelte-api'
 
 export const router = {
   hi: context
@@ -32,7 +32,7 @@ export const router = {
 
 <h1>Returning a value</h1>
 <Code directory="router.ts" code={`
-import { context } from '@svelte-api/core'
+import { context } from 'svelte-api'
 
 export const router = {
   one: context

@@ -1,19 +1,8 @@
 import type { Handle } from "@sveltejs/kit"
 import { ToAsync } from "./types.js"
 import { BetterCookies } from "./cookies.js"
-import { WebSocketServer } from "ws"
 
-export function createHandle(router: object, wss?: WebSocketServer): Handle {
-  if (wss) {
-    wss.on("connection", (ws, req) => {
-      console.log(`[wss:kit] client connected (singleton)`);
-      ws.send("")
-      ws.on('close', () => {
-        console.log(`[wss:kit] client disconnected (singleton)`);
-      });
-    })
-  }
-
+export function createHandle(router: object): Handle {
   return async ({ event, resolve }) => {
     const { searchParams, pathname } = event.url
     const api = searchParams.get('api')
@@ -26,7 +15,7 @@ export function createHandle(router: object, wss?: WebSocketServer): Handle {
     event.cookies = new BetterCookies(event.cookies)
     const route = findRoute(api.split("."), router)
     
-    const body = await route(event, reqBody)
+    const body = await reqBody ? route(reqBody, event) : route(event)
     return new Response(JSON.stringify(body ?? null), {
       headers: {
         'Content-Type': 'application/json',
