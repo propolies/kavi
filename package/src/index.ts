@@ -1,3 +1,4 @@
-export * from './client'
-export { context } from "./middleware"
-export { createHandle } from "./handle"
+export * from './client.js'
+export { ClientRouter } from './types.js'
+export { context } from "./middleware.js"
+export { createHandle } from "./handle.js"

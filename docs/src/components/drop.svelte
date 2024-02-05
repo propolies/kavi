@@ -11,7 +11,7 @@
   <Dropdown onClick={() => goto("/docs/call")} 
     name="Router" items={[
       "Call",
-      "Params",
+      "Args",
       "Context",
       "Nesting"
     ]} />

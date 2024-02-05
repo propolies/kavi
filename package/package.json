@@ -1,10 +1,11 @@
 {
-  "name": "@svelte-api/core",
-  "version": "0.1.4",
+  "name": "svelte-api",
+  "version": "0.0.0-pre.2",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
   },
+  "type": "module",
   "types": "dist/index.d.ts",
   "exports": {
     ".": "./dist/index.js"
@@ -13,14 +14,12 @@
     "type": "git",
     "url": "https://github.com/propolies/svelte-api"
   },
-  "author": "propolies",
   "license": "MIT",
-  "peerDependencies": {
-    "@sveltejs/kit": "^1.25.1",
-    "svelte": "^4.0.0"
-  },
   "devDependencies": {
-    "typescript": "^5.2.2"
-  },
-  "description": ""
+    "@sveltejs/kit": "^2.0.0",
+    "@types/ws": "^8.5.10",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.3",
+    "zod": "^3.22.4"
+  }
 }

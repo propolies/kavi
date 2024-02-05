@@ -3,15 +3,15 @@
 </script>
 
 <h1>
-  Params
+  Args
 </h1>
 <p>
-  Notice how we are not only getting access to the params, but also still have access to the context.
+  Notice how we are not only getting access to the arguments, but also still have access to the context.
 </p>
 <Code directory="router.ts" code={`
 export const router = {
   one: context
-    .params<number>()
+    .args(z.number())
     .call((n, ctx) => {
       return n
     })

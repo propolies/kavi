@@ -1,7 +1,7 @@
 <script>
   import Code from "$lib/components/code.svelte"
   const code = `
-npm install @svelte-api/core
+npm install svelte-api
 `;
 </script>
 
