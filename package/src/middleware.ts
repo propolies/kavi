@@ -1,11 +1,12 @@
 import type { RequestEvent } from "@sveltejs/kit"
 import type { Schema } from 'zod'
 
-type SchemaReturn<T extends Schema> = T extends { parse: (...args: any[]) => infer R }
-  ? R
-  : number
+type SchemaReturn<T extends Schema> = T extends 
+  { parse: (...args: any[]) => infer R }
+    ? R
+    : number
 
-class Middleware<Context, Needs> {
+class Middleware<Context extends object, Needs> {
   constructor(private getContext: (needs: Needs) => Context) {}
   
   use<NewContext>(createContext: (ctx: Context) => NewContext) {
@@ -22,24 +23,20 @@ class Middleware<Context, Needs> {
   args<S extends Schema>(schema: S) {
     type Args = SchemaReturn<S>
     return {
-      call: <Return>(fn: (args: Args, ctx: Context ) => Return) => {
+      call: <Return>(fn: (args: Args, ctx: Context) => Return) => {
         return (args: Args, ...needs: (Needs)[]) => {
           const parsedArgs: Args = schema.parse(args)
-          const getContext = this.getContext
-          return fn(parsedArgs, {
-            ...getContext(needs[0])
-          })
+          const context = this.getContext(needs[0])
+          return fn(parsedArgs, context)
         } 
       }
     }
   }
   
-  call<Return>(fn: (ctx: Context ) => Return) {
+  call<Return>(fn: (ctx: Context) => Return) {
     return (...needs: Needs[]) => {
-      const getContext = this.getContext
-      return fn({
-        ...getContext(needs[0])
-      })
+      const context = this.getContext(needs[0])
+      return fn(context)
     } 
   }
 }

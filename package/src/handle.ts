@@ -15,7 +15,15 @@ export function createHandle(router: object): Handle {
     event.cookies = new BetterCookies(event.cookies)
     const route = findRoute(api.split("."), router)
     
-    const body = await reqBody ? route(reqBody, event) : route(event)
+    const args = reqBody ? [reqBody, event] : [event]
+    let body: { data?: unknown, error?: string } = {}
+    try {
+      body.data = await route(...args)
+    } catch (error) {
+      if (error instanceof Error) {
+        body.error = error.message
+      }
+    }
     return new Response(JSON.stringify(body ?? null), {
       headers: {
         'Content-Type': 'application/json',
