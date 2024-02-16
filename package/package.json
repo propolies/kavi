@@ -1,6 +1,6 @@
 {
   "name": "svelte-api",
-  "version": "0.0.0-pre.2",
+  "version": "0.0.0-pre.3",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc"
