@@ -1,11 +1,18 @@
 import { context } from "svelte-api"
 import z from 'zod'
 
+const user = context.use(() => {
+  if (Math.random() > .5) throw new Error("some error")
+  return {
+    n: 3
+  }
+})
+
 export const router = {
-  one: context
-    .call(() => {
+  one: user
+    .call(({ n }) => {
       console.log(1)
-      return 1
+      return 1 + n
     }),
   add: context
     .args(z.tuple([z.number(), z.number()]))

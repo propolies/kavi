@@ -42,10 +42,12 @@ export const router = {
 }
 `} />
 <p>
-  Just like a regular function you can simply assign to it.
+  In order to use the returned value we use a matcher.
 </p>
 <Code code={`
 const res = await r.one()
-     //^typeof res = ReturnType<typeof r.one>
-     //            = number
+res.match({
+  ok: (res) => console.log("no error occured, result:", res),
+  error: (err) => console.log("error occured, error:", err)
+})
 `} />
