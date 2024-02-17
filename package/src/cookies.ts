@@ -7,7 +7,7 @@ interface Cookie {
   opts: CookieSerializeOptions & { path: string }
 }
 
-export class BetterCookies implements Cookies {
+export class CookiesWrapper implements Cookies {
   private setCookies: Cookie[] = []
 
   constructor(private cookies: Cookies) {}

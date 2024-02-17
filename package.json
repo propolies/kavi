@@ -7,6 +7,7 @@
     "doc": "cd docs && pnpm dev",
     "dev": "cd example && pnpm dev",
     "install": "",
-    "build": "cd package && pnpm build"
+    "build": "cd package && pnpm build",
+    "publish": "echo wrong cd"
   }
 }
