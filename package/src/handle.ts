@@ -1,6 +1,6 @@
 import type { Handle } from "@sveltejs/kit"
 import { ToAsync } from "./types.js"
-import { BetterCookies } from "./cookies.js"
+import { CookiesWrapper } from "./cookies.js"
 
 export function createHandle(router: object): Handle {
   return async ({ event, resolve }) => {
@@ -12,7 +12,7 @@ export function createHandle(router: object): Handle {
     }
 
     let reqBody = await event.request.json().catch(() => '')
-    event.cookies = new BetterCookies(event.cookies)
+    event.cookies = new CookiesWrapper(event.cookies)
     const route = findRoute(api.split("."), router)
     
     const args = reqBody ? [reqBody, event] : [event]
@@ -27,7 +27,7 @@ export function createHandle(router: object): Handle {
     return new Response(JSON.stringify(body ?? null), {
       headers: {
         'Content-Type': 'application/json',
-        'Set-Cookie': (event.cookies as BetterCookies).getSetCookies()
+        'Set-Cookie': (event.cookies as CookiesWrapper).getSetCookies()
       }
     })
   }

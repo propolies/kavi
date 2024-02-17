@@ -4,10 +4,7 @@
 
 <button on:click={async () => {
   const res = await r.one()
-  res.match({
-    ok: (res) => console.log("res", res),
-    error: (err) => console.log("error", err)
-  })
+  console.log(res.ok())
 }}>
   call
 </button>

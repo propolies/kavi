@@ -47,7 +47,36 @@ export const router = {
 <Code code={`
 const res = await r.one()
 res.match({
-  ok: (res) => console.log("no error occured, result:", res),
-  error: (err) => console.log("error occured, error:", err)
+  ok: (res) => {}, // no error occured
+  error: (err) => {} // error occured
 })
+// Can also be used as a default value
+const dataOrDefault = res.match({
+  ok: (res) => res,
+  error: (err) => 1 // default
+})
+`} />
+<p>
+  If we only want to check for <code>ok</code> or <code>error</code>
+</p>
+<Code code={`
+const res = await r.one()
+
+// Will be undefined if an error occured
+const data = res.ok()
+
+// Will be undefined if no error occured
+const error = res.error() 
+`} />
+<p>
+  Like the matcher we can also do something on <code>ok</code>
+</p>
+<Code code={`
+const res = await r.one()
+
+// Will be undefined if an error occured
+const data = res.ok((data) => /* do something with data */)
+
+// Will be undefined if no error occured
+const data = res.error((error) => 1)
 `} />

@@ -1,4 +1,4 @@
-import { assert, Equals } from 'tsafe'
+import { assert, Equals, ReturnType } from 'tsafe'
 import type { Cookies, RequestEvent } from '@sveltejs/kit'
 import { context, createClientRouter, type ClientRouter, Result } from 'svelte-api'
 import z from 'zod'
@@ -71,10 +71,11 @@ const useRouter = {
 type GetRouter<R extends object> = ReturnType<typeof createClientRouter<ClientRouter<R>>>
 
 // Test client call router
+type CallRouter = GetRouter<typeof callRouter>
 type ExpectedCallRouter = {
   call: () => Promise<Result<number>>,
 }
-assert<Equals<ExpectedCallRouter, GetRouter<typeof callRouter>>>()
+assert<Equals<ExpectedCallRouter, CallRouter>>()
 
 // Test client args router
 type ExpectedArgsRouter = {
@@ -104,3 +105,28 @@ type ExpectedUseRouter = {
   use: () => Promise<Result<void>>
 }
 assert<Equals<ExpectedUseRouter, UseRouter>>()
+
+// Test Result types
+const res = await createClientRouter<CallRouter>().call()
+
+const r1 = res.ok(value => "str")
+type Ok1 = typeof r1
+assert<Equals<Ok1, string | undefined>>()
+
+const r2 = res.ok()
+type Ok2 = typeof r2
+assert<Equals<Ok2, number | undefined>>()
+
+const e1 = res.error((error) => 1)
+type E1 = typeof e1
+assert<Equals<E1, number | undefined>>()
+
+const e2 = res.error()
+type E2 = typeof e2
+assert<Equals<E2, string | undefined>>()
+
+const r = res.match({
+  ok: (value) => "1",
+  error: (error) => "2"
+})
+assert<Equals<typeof r, string>>()
