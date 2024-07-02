@@ -1,13 +1,11 @@
 {
-  "scripts": {
-    "example": "cd example && pnpm dev",
-    "example-i": "cd example && pnpm install",
-    "example-dev": "cd example && pnpm dev",
-    "example-build": "cd example && pnpm build",
-    "doc": "cd docs && pnpm dev",
-    "dev": "cd example && pnpm dev",
-    "install": "",
-    "build": "cd package && pnpm build",
-    "publish": "echo wrong cd"
-  }
+	"devDependencies": {
+		"@eslint/js": "^9.4.0",
+		"@types/eslint": "^8.56.10",
+		"@types/eslint__js": "^8.42.3",
+		"eslint": "^9.4.0",
+		"typescript": "^5.4.5",
+		"typescript-eslint": "^7.12.0"
+	},
+  "type": "module"
 }

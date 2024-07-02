@@ -1,34 +1,46 @@
 {
-	"name": "svelte-api-docs",
+	"name": "docs",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build",
+		"build-rm": "rm -rf build && vite build",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"lint": "eslint ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-auto": "^2.0.0",
-		"@sveltejs/adapter-vercel": "^2.4.3",
-		"@sveltejs/kit": "^1.20.4",
-		"autoprefixer": "^10.4.16",
-		"postcss": "^8.4.31",
-		"svelte": "^4.0.5",
-		"svelte-check": "^3.4.3",
-		"tailwindcss": "^3.3.3",
+		"@mdsx/rehype-custom-highlighter": "^0.0.3",
+		"@steeze-ui/heroicons": "^2.3.0",
+		"@steeze-ui/svelte-icon": "^1.5.0",
+		"@sveltejs/adapter-static": "^3.0.1",
+		"@sveltejs/kit": "^2.0.0",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
+		"@tailwindcss/typography": "^0.5.12",
+		"@types/eslint": "^8.56.0",
+		"@typescript-eslint/eslint-plugin": "^7.0.0",
+		"@typescript-eslint/parser": "^7.0.0",
+		"autoprefixer": "^10.4.19",
+		"eslint": "^8.56.0",
+		"eslint-plugin-svelte": "^2.35.1",
+		"magic-string": "^0.30.10",
+		"mdsx": "^0.0.5",
+		"postcss": "^8.4.38",
+		"rehype-slug": "^6.0.0",
+		"shiki": "^1.3.0",
+		"svelte": "5.0.0-next.136",
+		"svelte-check": "^3.6.0",
+		"tailwindcss": "^3.4.3",
 		"tslib": "^2.4.1",
 		"typescript": "^5.0.0",
-		"vercel": "^32.5.0",
-		"vite": "^4.4.2"
+		"unified": "^11.0.4",
+		"unist-util-visit": "^5.0.0",
+		"vite": "^5.0.3"
 	},
 	"type": "module",
 	"dependencies": {
-		"@steeze-ui/lucide-icons": "^1.1.1",
-		"@steeze-ui/svelte-icon": "^1.5.0",
-		"@types/prismjs": "^1.26.1",
-		"@vercel/analytics": "^1.1.1",
-		"highlight.js": "^11.8.0"
+		"svelte-outside": "^0.0.3"
 	}
 }

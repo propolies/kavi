@@ -1,25 +1,52 @@
 {
-  "name": "svelte-api",
-  "version": "0.0.0-pre.3",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc"
+  "name": "kavi",
+  "version": "0.0.0-pre.2",
+  "description": "description",
+  "author": {
+    "name": "propolies",
+    "url": "https://github.com/propolies"
   },
-  "type": "module",
-  "types": "dist/index.d.ts",
   "exports": {
-    ".": "./dist/index.js"
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./client": {
+      "import": "./dist/client/index.js",
+      "types": "./dist/client/index.d.ts"
+    },
+    "./server": {
+      "import": "./dist/server/index.js",
+      "types": "./dist/server/index.d.ts"
+    }
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/propolies/svelte-api"
+    "url": "git+https://github.com/propolies/kavi.git",
+    "directory": "package"
+  },
+  "main": "index.js",
+  "scripts": {
+    "dev": "rimraf dist && tsc --watch",
+    "build": "rimraf dist && tsc"
   },
   "license": "MIT",
+  "types": "./dist/index.d.ts",
+  "type": "module",
+  "peerDependencies": {
+    "@sveltejs/kit": "^1.0.0 || ^2.0.0",
+    "svelte": "^5.0.0 || ^5.0.0-next"
+  },
   "devDependencies": {
-    "@sveltejs/kit": "^2.0.0",
+    "@sveltejs/kit": "^2.5.10",
     "@types/ws": "^8.5.10",
-    "typescript": "^5.2.2",
+    "rimraf": "^5.0.7",
+    "svelte": "5.0.0-next.166",
+    "typescript": "^5.4.5",
     "vite": "^5.0.3",
-    "zod": "^3.22.4"
+    "zod": "^3.23.8"
+  },
+  "dependencies": {
+    "devalue": "^5.0.0"
   }
 }

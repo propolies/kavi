@@ -1,0 +1,21 @@
+{
+  "assertEquals": {
+    "prefix": "eq",
+    "body": [
+      "assert<Equals<",
+      "  $1",
+      ">>()"
+    ]
+  },
+  "assertNotEquals": {
+    "prefix": "neq",
+    "body": [
+      "assert<Equals<",
+      "  assert<Equals<",
+      "    $1",
+      "  >>()",
+      "  false",
+      ">>()"
+    ]
+  },
+}

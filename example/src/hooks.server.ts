@@ -1,4 +1,5 @@
-import { createHandle } from 'svelte-api'
-import { router } from './lib/sapi/router'
+import { createHandle } from "kavi/server"
+import { apiRouter } from "./kavi/server"
+import { options } from "./kavi/options"
 
-export const handle = createHandle(router)
+export const handle = createHandle(apiRouter, options)

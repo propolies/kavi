@@ -1,0 +1,21 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "declaration": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "outDir": "dist",
+    "noEmit": true,
+    "paths": {
+      "kavi/*": ["../src/*"],
+      "kavi": ["../src/index"],
+      "kavi/server": ["../src/server/index"],
+      "kavi/client": ["../src/client/index"],
+    },
+  },
+  "include": ["types/**/*.ts", "unit/**/*"],
+  "files": ["../src/app.d.ts"]
+}

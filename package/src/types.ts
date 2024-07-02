@@ -1,40 +1,31 @@
-import { Result } from "./result.js";
+import type { KaviError } from "./errors.js"
 
-export type Pretty<T> = T extends Function ? T : { [K in keyof T]: Pretty<T[K]> } & {};
-export type ToAsync<T extends Function> = T extends (...args: infer Args) => (Promise<infer R> | infer R)
-  ? (...args: Args) => Promise<R> 
+type Obj = Record<string, unknown>
+type MaybePromise<T> = Promise<T> | T
+
+type ExtractErrorOptions<T extends Function> = T extends (...args: any[]) => infer R
+  ? R extends KaviError<infer Options>
+    ? Options
+    : never
   : never
-export type ToPromise<T extends object> = {
-  [K in keyof T]: T[K] extends (...args: any[]) => any 
-    ? ToAsync<T[K]>
-    : (
-      T[K] extends object 
-        ? ToPromise<T[K]>
-        : never
-    )
-}
 
-export type ExcludeEvent<T extends object> = {
-  [K in keyof T]: T[K] extends (...args: infer Args) => infer R
-    ? Args extends [args: infer Args, ...needs: infer Needs]
-      ? (args: Args) => R
-      : () => R
-    : (
-      T[K] extends Object 
-        ? ExcludeEvent<T[K]>
-        : never
-    )
-}
-export type ToResult<T extends object> = {
-  [K in keyof T]: T[K] extends (...args: infer Args) => (Promise<infer R> | infer R)
-    ? (...args: Args) => Result<R>
-    : (
-      T[K] extends Object 
-        ? ToResult<T[K]>
-        : never
-    )
-}
+type RemoveErrorOptions<T extends Function> = T extends (...args: any[]) => infer R
+  ? R extends KaviError<any>
+    ? never
+    : R
+  : never
 
-export type ClientRouter<R extends object> = Pretty<ToPromise<ToResult<ExcludeEvent<R>>>>
+type AnyFunc = (...args: any[]) => any
 
-export type Err = { error?: string }
+type Pretty<T> = T extends Function
+  ? T
+  : { [K in keyof T]: Pretty<T[K]> } & {}
+
+export type {
+  Obj,
+  MaybePromise,
+  ExtractErrorOptions,
+  RemoveErrorOptions,
+  AnyFunc,
+  Pretty
+}
