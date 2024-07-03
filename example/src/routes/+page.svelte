@@ -31,7 +31,7 @@
 {#snippet RoomButton(room: number)}
   {@const joined = ws?.rooms.has(room)}
   <div class="flex flex-col gap-2">
-    <button 
+    <button
       onclick={async () => {
         if (joined) {
           await ws?.leave(room)
@@ -47,7 +47,7 @@
       <p>Join room {room}</p>
       <input type="checkbox"  checked={joined} class="checkbox pointer-events-none" />
     </button>
-    <button 
+    <button
       onclick={() => ws?.emit("msg", `ping ${room}`, room)}
       class="btn {(!ws || !joined) && "btn-disabled"}"
     >
@@ -62,7 +62,7 @@
       <p class="text-base">Connect</p>
       <Icon src={Plug} class="size-5" />
     </button>
-    
+
     <button class="btn btn-warning {!ws && "btn-disabled"}" onclick={() => ws?.close()}>
       <p class="text-base">Close</p>
       <Icon src={Unplug} class="size-5" />
@@ -72,7 +72,7 @@
       Go to api
     </a>
   </div>
-  
+
   <button
     class="btn {!ws && "btn-disabled"}"
     onclick={() => ws?.emit("msg", "hey")}

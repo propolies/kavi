@@ -29,7 +29,7 @@
   })})
 </script>
 
-<nav id="toc" class="text-gray-200 opacity-90 py-8 h-screen sticky top-0 flex-col stable hidden min-[900px]:flex">
+<nav id="toc" class="text-gray-200 opacity-90 fixed h-[calc(100vh-theme(size.14))] flex-col stable hidden min-[900px]:flex py-8">
   <a href="{path}" class="text-gray-400 mb-2">
     On this page
   </a>

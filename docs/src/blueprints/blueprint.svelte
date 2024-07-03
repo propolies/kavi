@@ -5,5 +5,5 @@
 <script lang="ts">
   export let metadata
 </script>
- 
+
 <slot {metadata} />

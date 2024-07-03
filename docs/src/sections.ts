@@ -9,7 +9,8 @@ export const sections = [
     "arguments",
     "middlewares",
     "marshalling",
-    "nesting-routes"
+    "nesting-routes",
+    "loading-data"
   ]],
   ["handling-results", [
     "results",

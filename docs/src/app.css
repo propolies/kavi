@@ -6,8 +6,8 @@
   scroll-behavior: smooth !important;
 } */
 
-body:has(main.body-overflow-hidden) {
-  @apply hidden;
+html {
+  @apply bg-zinc-900;
 }
 
 .prose code:not(pre > code) {
@@ -24,11 +24,30 @@ body:has(main.body-overflow-hidden) {
   @apply hidden;
 }
 
-html,
 .stable {
   scrollbar-gutter: stable;
 }
 
-html {
-  @apply bg-zinc-900;
+html :has(.body-overflow-hidden) {
+  @apply overflow-hidden;
+}
+
+/* width */
+::-webkit-scrollbar {
+  @apply size-2;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-zinc-800 rounded;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-zinc-500 rounded;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

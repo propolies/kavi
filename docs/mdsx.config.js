@@ -1,26 +1,13 @@
 import { defineConfig } from 'mdsx'
 import { visit } from "unist-util-visit"
 import { rehypeCustomHighlight } from '@mdsx/rehype-custom-highlighter'
-import { getSingletonHighlighter } from 'shiki'
 import MagicString from 'magic-string'
 import rehypeSlug  from 'rehype-slug'
+import { highlight } from './src/shiki.js'
 
 /** @type {import('@mdsx/rehype-custom-highlighter').HighlightOptions} */
-const customHighlightOptions = {
-  highlight: async ({ value, lang }) => {
-    const highlighter = await getSingletonHighlighter({
-      langs: [
-        'plaintext',
-        import("shiki/langs/typescript.mjs"),
-        import("shiki/langs/svelte.mjs")
-      ],
-      themes: [import('shiki/themes/github-dark.mjs')]
-    })
-    return highlighter.codeToHtml(value, {
-      lang,
-      theme: 'github-dark',
-    })
-  },
+export const customHighlightOptions = {
+  highlight
 }
 
 export const mdsxConfig = defineConfig({

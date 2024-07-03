@@ -1,13 +1,17 @@
 <script lang="ts">
+  import Navbar from '$lib/components/navbar.svelte'
+  import Vault from '$lib/components/vault.svelte'
   import '../app.css'
-  import Sidebar from '$lib/components/sidebar.svelte'
-  import Toc from '$lib/components/toc.svelte'
 </script>
 
-<div class="flex justify-center">
-  <main class="flex min-h-screen w-full max-w-6xl justify-center sm:justify-normal">
-    <Sidebar />
+<Vault />
+<div
+  class="flex justify-center"
+>
+  <div
+    class="flex flex-col w-full items-center [&>*]:px-6"
+  >
+    <Navbar />
     <slot />
-    <Toc />
-  </main>
+  </div>
 </div>

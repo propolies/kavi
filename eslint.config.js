@@ -1,11 +1,33 @@
 // @ts-check
+import js from '@eslint/js'
+import ts from 'typescript-eslint'
+import svelte from 'eslint-plugin-svelte'
+import globals from 'globals'
 
-import eslint from '@eslint/js'
-import tseslint from 'typescript-eslint'
-
-export default tseslint.config(
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
+export default ts.config(
+  js.configs.recommended,
+  ...ts.configs.recommended,
+  ...svelte.configs['flat/recommended'],
+  {
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+        ...globals.node
+      }
+    }
+  },
+  {
+    files: ['**/*.svelte'],
+    languageOptions: {
+      parserOptions: {
+        parser: ts.parser
+      }
+    },
+    rules: {
+      "svelte/indent": "error",
+      "svelte/no-at-html-tags": "off"
+    }
+  },
   {
     rules: {
       "no-trailing-spaces": "error",
@@ -14,7 +36,15 @@ export default tseslint.config(
       "@typescript-eslint/semi": ["error", "never"],
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-this-alias": "off"
+      "@typescript-eslint/no-this-alias": "off",
     }
-  }
+  },
+  {
+    ignores: [
+      "**/dist/*",
+      "**/build/*",
+      "**/node_modules/*",
+      "**/.svelte-kit/*",
+    ],
+  },
 )

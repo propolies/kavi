@@ -29,8 +29,6 @@ const config = {
       base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
       relative: false
     },
-    
-    
   },
   onwarn(warning, handler) {
     const ext = warning.filename.split(".").at(-1)
@@ -57,7 +55,7 @@ function baseurl() {
 
       const section = files.at(-2)
       processed.add(`${section}/${name}`)
-      
+
       const s = new MagicString(content, { filename })
       s.replaceAll('href="/docs', `href="${base}/docs`)
 

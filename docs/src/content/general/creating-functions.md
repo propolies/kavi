@@ -7,7 +7,7 @@ To create new functions (endpoints), use `.call` on any middleware.
 ```ts
 import { middleware } from 'kavi/server'
 
-export const api = {
+export const router = {
   // middleware runs before every call
   route: middleware 
     .call(({ event }) => {

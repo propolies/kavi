@@ -11,7 +11,7 @@
   )
 </script>
 
-<article class="prose overflow-hidden prose-invert m-8 w-full px-6 mx-0">
+<article class="prose overflow-hidden prose-invert w-full m-8 pb-8 px-6 mx-0">
   <h1 class="mb-0" id={titleId}>
     {title}
   </h1>

@@ -35,7 +35,7 @@
 		"@steeze-ui/svelte-icon": "^1.5.0",
 		"@sveltejs/adapter-node": "^5.0.1",
 		"@types/ws": "^8.5.10",
-		"kavi": "workspace:0.0.0-pre.1",
+		"kavi": "workspace:^",
 		"ws": "^8.17.0",
 		"zod": "^3.23.8"
 	},

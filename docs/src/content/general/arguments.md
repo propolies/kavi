@@ -1,18 +1,18 @@
 ---
-description: How to pass parameters to functions
+description: How to pass arguments to functions
 ---
 
 ## Args
-To accept parameters we need to use `.args` which takes a `zod` object so we can validate the input.
+To accept arguments we need to use `.args` which takes a `zod` object so we can validate the input.
 ```ts
 import { middleware } from 'kavi/server'
 import z from 'zod'
 
 middleware
-  .params(z.number())
-  .call((arg, ctx) => ...)
+  .args(z.number())
+  .call((args, ctx) => ...)
 ```
-Since `.arg` only takes one argument we can use `z.tuple()` or `z.object()` to get more arguments. 
+Since `.args` only takes one argument we can use `z.tuple()` or `z.object()` to get more arguments. 
 
 ### Example
 ```ts file=server.ts

@@ -43,7 +43,13 @@ export class Result<T, const E extends KaviErrorOptions> {
       : [res, undefined] as const
   }
 
-  async throws() {}
+  async expect() {
+    const res = await this.fn()
+    if (this.isError(res)) {
+      throw res
+    }
+    return res
+  }
 
   match<A, B>(opts: { ok: (value: T) => A, error: (err: Errors<E> | AnyError) => B }): Promise<A | B>
   match<A>(opts: { ok: (value: T) => A }): Promise<A | (Errors<E> | AnyError)>
