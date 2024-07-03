@@ -4,7 +4,7 @@
   import { sections } from '$lib/sections.js'
   import { CamelCase } from '$lib/utils'
   const [section, subsection] = $derived($page.params.slug.split("/"))
-  
+
   function navigate(sign: 1 | -1): [string, string] | undefined {
     const sectionIndex = sections.findIndex(([sect]) => sect == section)
     const subsections = sections[sectionIndex][1]
@@ -27,11 +27,11 @@
   {@const sign = isNext ? 1 : -1}
   {@const navigation = navigate(sign)}
   {#if navigation}
-    <a 
-      href="{base}/docs/{navigation.join("/")}" 
+    <a
+      href="{base}/docs/{navigation.join("/")}"
       class="w-full hover:text-white group
-        {isNext 
-          ? "col-start-2 place-self-end" 
+        {isNext
+          ? "col-start-2 place-self-end"
           : "col-start-1"
         }"
     >

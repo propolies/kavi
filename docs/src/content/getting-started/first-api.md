@@ -6,7 +6,7 @@ To write your first api with kavi you need a [middleware](/docs/general/middlewa
 ```ts file=server.ts
 import { middleware } from 'kavi/server'
 
-export const api = {
+export const router = {
   hello: middleware
     .call(() => {
       console.log("hello server")

@@ -20,7 +20,9 @@ export const options = {
   devalue: {
     Date: pipe
       .onStringify((value) => {
-        return value instanceof Date && date.toString()
+        if (value instanceof Date) {
+          return date.toString()
+        }
       })
       .onParse((value) => new Date(value))
   }

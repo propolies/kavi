@@ -8,6 +8,7 @@ A `Result` object will always be returned when calling the api. This allows us t
 Say we want to update a user, but only if all goes well. 
 ```svelte file=+page.svelte
 <script lang="ts">
+  import { api } from '$lib/kavi/client'
   import { user } from '$lib/stores'
 
   await api.getUser()

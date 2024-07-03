@@ -1,4 +1,4 @@
-import type { ComponentType } from "svelte";
+import type { ComponentType } from "svelte"
 
 type Modules = Record<string, () => Promise<{
   default: ComponentType,
@@ -6,6 +6,6 @@ type Modules = Record<string, () => Promise<{
     title: string,
     description: string
   }
-}>>;
+}>>
 
-export const modules = import.meta.glob("/src/content/**/*md") as Modules;
+export const modules = import.meta.glob("/src/content/**/*md") as Modules

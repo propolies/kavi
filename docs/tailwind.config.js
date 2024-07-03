@@ -8,8 +8,6 @@ export default {
   ],
   theme: {
     extend: {
-      colors: {
-      }
     }
   },
   plugins: [typography]

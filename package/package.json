@@ -1,6 +1,6 @@
 {
   "name": "kavi",
-  "version": "0.0.0-pre.2",
+  "version": "0.0.0-pre.4",
   "description": "description",
   "author": {
     "name": "propolies",
@@ -35,7 +35,7 @@
   "type": "module",
   "peerDependencies": {
     "@sveltejs/kit": "^1.0.0 || ^2.0.0",
-    "svelte": "^5.0.0 || ^5.0.0-next"
+    "svelte": "^4.0.0 || ^5.0.0 || ^5.0.0-next"
   },
   "devDependencies": {
     "@sveltejs/kit": "^2.5.10",
