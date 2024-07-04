@@ -29,4 +29,4 @@ And voila, a typesafe api
 // client
 await api.add([1, 2]).ok() // 3
 ```
-Read more in the [docs](https://propolies.github.io/jely/docs/getting-started/introduction)
+Read more in the [docs](https://propolies.github.io/kavi/docs/getting-started/introduction)
