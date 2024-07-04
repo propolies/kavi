@@ -13,7 +13,7 @@
     </span>
     <span>with ease.</span>
   </div>
-  <div class="flex gap-4 mt-12">
+  <div class="flex min-[400px]:flex-row flex-col gap-4 mt-12">
     <Link
       href="/docs/getting-started/introduction"
       class="flex bg-[#348DF2] text-[#001B39] p-2 rounded-sm gap-2"
