@@ -26,6 +26,9 @@ importers:
       globals:
         specifier: ^15.8.0
         version: 15.8.0
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.7
       typescript:
         specifier: ^5.4.5
         version: 5.4.5
@@ -206,9 +209,6 @@ importers:
       '@types/ws':
         specifier: ^8.5.10
         version: 8.5.10
-      rimraf:
-        specifier: ^5.0.7
-        version: 5.0.7
       svelte:
         specifier: 5.0.0-next.166
         version: 5.0.0-next.166

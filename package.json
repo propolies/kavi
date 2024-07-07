@@ -6,6 +6,7 @@
 		"eslint": "^9.4.0",
 		"eslint-plugin-svelte": "^2.41.0",
 		"globals": "^15.8.0",
+		"rimraf": "^5.0.7",
 		"typescript": "^5.4.5",
 		"typescript-eslint": "^7.12.0"
 	},
