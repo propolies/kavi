@@ -24,7 +24,10 @@
       <Github />
     </a>
     <button
-      onclick={() => vault.showVault = !vault.showVault }
+      onclick={(e) => {
+        e.preventDefault()
+        vault.showVault = !vault.showVault
+      }}
       class="hover:text-white sm:hidden block"
     >
       <Icon src={vault.showVault ? X : Menu} class="size-7" />
