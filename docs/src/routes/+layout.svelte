@@ -6,10 +6,10 @@
 
 <Vault />
 <div
-  class="flex justify-center"
+  class="flex justify-center sm:px-6"
 >
   <div
-    class="flex flex-col w-full items-center [&>*]:px-6"
+    class="flex flex-col w-full items-center"
   >
     <Navbar />
     <slot />
