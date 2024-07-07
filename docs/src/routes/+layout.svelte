@@ -6,7 +6,7 @@
 
 <Vault />
 <div
-  class="flex justify-center sm:px-6"
+  class="flex justify-center"
 >
   <div
     class="flex flex-col w-full items-center"

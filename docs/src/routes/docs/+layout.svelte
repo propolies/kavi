@@ -6,9 +6,10 @@
 <main
   class="
     max-w-4xl
-    grid gap-4 min-h-screen w-full justify-center
+    grid gap-4 min-h-[calc(100dvh - theme(size.14))] w-full
     grid-cols-1
-    sm:grid-cols-[12rem,1fr]
+    sm:justify-items-start justify-items-center
+    sm:grid-cols-[12rem,1fr] sm:px-6
     min-[900px]:grid-cols-[12rem,1fr,8rem]
   "
 >
