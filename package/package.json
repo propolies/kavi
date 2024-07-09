@@ -1,11 +1,12 @@
 {
   "name": "kavi",
-  "version": "0.0.0-pre.5",
-  "description": "description",
+  "version": "0.0.0-pre.6",
+  "description": "Typesafe api routes for sveltekit",
   "author": {
     "name": "propolies",
     "url": "https://github.com/propolies"
   },
+  "homepage": "https://propolies.github.io/kavi/",
   "exports": {
     ".": {
       "import": "./dist/index.js",
@@ -28,7 +29,8 @@
   "main": "index.js",
   "scripts": {
     "dev": "rimraf dist && tsc --watch",
-    "build": "rimraf dist && tsc"
+    "build": "rimraf dist && tsc",
+    "test": "cd tests && pnpm test"
   },
   "license": "MIT",
   "types": "./dist/index.d.ts",
@@ -39,8 +41,6 @@
   },
   "devDependencies": {
     "@sveltejs/kit": "^2.5.10",
-    "@types/ws": "^8.5.10",
-    "svelte": "5.0.0-next.166",
     "typescript": "^5.4.5",
     "vite": "^5.0.3",
     "zod": "^3.23.8"

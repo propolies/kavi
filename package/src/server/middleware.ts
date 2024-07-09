@@ -1,22 +1,22 @@
 import type { RequestEvent } from "@sveltejs/kit"
-import type { Obj } from "../types.js"
+import type { MaybePromise, Obj } from "../types.js"
 import type * as Z from 'zod'
-import { isError, type KaviError, type KaviErrorOptions } from "../errors.js"
+import { anyError, isError, type KaviError, type KaviErrorOptions } from "../errors.js"
 
 export class Middleware<
   Context extends Obj | KaviError<E>,
   Needs extends object,
   const E extends KaviErrorOptions
 > {
-  constructor(private getContext: (event: Needs) => Context) {}
+  constructor(private getContext: (event: Needs) => MaybePromise<Context>) {}
 
   use<NewContext extends Obj | KaviError<E>>(
-    createContext: (context: Context) => NewContext
+    createContext: (context: Context) => MaybePromise<NewContext>
   ): Middleware<NewContext | (Context extends KaviError<any> ? Context : never), Needs, E> {
     const { getContext } = this
     return new Middleware(
-      (needs: Needs) => {
-        const result = getContext(needs)
+      async (needs: Needs) => {
+        const result = await getContext(needs)
         if (isError(result)) {
           return result as (Context extends KaviError<any> ? Context : never)
         }
@@ -29,13 +29,16 @@ export class Middleware<
     type Args = Z.infer<S>
     return {
       call: <Return>(fn: (args: Args, context: Context & Needs) => Return) => {
-        return (args: Args, needs: Needs) => {
-          const parsedArgs: Args = schema.parse(args)
-          const result = this.getContext(needs)
+        return async (args: Args, needs: Needs) => {
+          const parsedArgs = schema.safeParse(args)
+          if (!parsedArgs.success) {
+            return anyError(parsedArgs.error) as Return
+          }
+          const result = await this.getContext(needs)
           if (isError(result)) {
             return result as (Context extends KaviError<any> ? Context : never)
           }
-          return fn(parsedArgs, {
+          return fn(parsedArgs.data as Args, {
             ...needs,
             ...result
           })
@@ -45,8 +48,8 @@ export class Middleware<
   }
 
   call<Return>(fn: (context: Context & Needs) => Return) {
-    return (needs: Needs) => {
-      const result = this.getContext(needs)
+    return async (needs: Needs) => {
+      const result = await this.getContext(needs)
       if (isError(result)) {
         return result as (Context extends KaviError<any> ? Context : never)
       }

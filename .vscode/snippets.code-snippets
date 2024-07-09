@@ -18,4 +18,16 @@
       ">>()"
     ]
   },
+  "script-ts": {
+    "prefix": "script",
+    "body": [
+      "<script lang='ts'>",
+      "  $1",
+      "</script>",
+    ]
+  },
+  "onclick": {
+    "prefix": "onclick",
+    "body": "onclick={$1}"
+  }
 }

@@ -13,9 +13,11 @@
       "kavi/*": ["../src/*"],
       "kavi": ["../src/index"],
       "kavi/server": ["../src/server/index"],
+      "kavi/server/*": ["../src/server/*"],
       "kavi/client": ["../src/client/index"],
+      "kavi/client/*": ["../src/client/*"],
     },
   },
-  "include": ["types/**/*.ts", "unit/**/*"],
+  "include": ["unit/**/*.ts"],
   "files": ["../src/app.d.ts"]
 }

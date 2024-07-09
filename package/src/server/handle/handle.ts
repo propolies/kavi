@@ -2,12 +2,10 @@ import type { Handle } from "@sveltejs/kit"
 import { CookiesProxy } from './cookies.js'
 import { setHeadersProxy } from "./headers.js"
 import type { AnyFunc } from "../../types.js"
-import * as devalue from 'devalue'
-import { KaviError } from "../../errors.js"
-import { getOptions, type Options } from "../../options.js"
+import type { Options } from "../../options/options.js"
+import { anyError } from "../../errors.js"
 
-export function createHandle(router: object, options?: Options): Handle {
-  const opts = getOptions(options)
+export function createHandle(router: object, options: Options): Handle {
   return async ({ event, resolve }) => {
     const api = event.url.searchParams.get('api')
     if (!event.url.pathname.startsWith('/kavi') || !api) {
@@ -15,10 +13,7 @@ export function createHandle(router: object, options?: Options): Handle {
     }
 
     globalThis._fetch = event.fetch
-    const reqBody = devalue.parse(
-      await event.request.text(),
-      opts.devalue.onParse
-    )
+    const reqBody = options.devalue.parse(await event.request.text())
     event.cookies = new CookiesProxy(event.cookies)
     const headers: Record<string, string> = {}
     event.setHeaders = setHeadersProxy(headers)
@@ -27,16 +22,10 @@ export function createHandle(router: object, options?: Options): Handle {
     let body
     try {
       body = await route(...reqBody ? [reqBody, { event }] : [{ event }])
-    } catch (error) {
-      if (error instanceof KaviError) {
-        throw error // todo
-      }
+    } catch (e) {
+      body = anyError(e)
     }
-
-    return new Response(devalue.stringify(
-      body,
-      opts.devalue.onStringify
-    ), {
+    return new Response(options.devalue.stringify(body), {
       headers: {
         ...headers,
         'Content-Type': 'application/json',

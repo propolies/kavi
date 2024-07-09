@@ -1,12 +1,10 @@
 import { Vector } from "$lib/vector"
-import { pipe, type Options } from "kavi"
+import { devalueOption, createOptions } from "kavi"
 
-export const options: Options = {
+export const options = createOptions({
   devalue: {
-    Vector: pipe
-      .onStringify((value) => value instanceof Vector && [ value.x, value.y ])
-      .onParse((value) => {
-        return new Vector(...value)
-      })
+    Vector: devalueOption
+      .stringify((value) => value instanceof Vector && [ value.x, value.y ])
+      .parse((value) => new Vector(...value))
   }
-}
+})

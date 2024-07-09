@@ -1,11 +1,6 @@
 <script lang="ts">
   import "../../app.css"
   import { api } from "$lib/kavi/client"
-    import { onMount } from "svelte"
-
-  onMount(() => {
-    api.test().ok()
-  })
 </script>
 
 <main class="m-4 flex gap-4">
@@ -74,4 +69,27 @@
   class="btn btn-accent"
 >
   Custom Object
+</button>
+
+<button
+  onclick={async () => {
+    await api.async().ok((data) => {
+      console.log(data)
+    })
+  }}
+  class="btn btn-accent"
+>
+  Async call
+</button>
+
+<button
+  onclick={async () => {
+    // @ts-expect-error "Should error"
+    const [res, err] = await api.test(1).run()
+    console.log("res", res)
+    console.log("err", err)
+  }}
+  class="btn btn-accent"
+>
+  test
 </button>

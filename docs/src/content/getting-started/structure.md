@@ -7,25 +7,32 @@ description: Heres the recommended project structure.
 ┗ 📂lib
   ┗ 📂kavi
     ┣ client.ts
-    ┣ options.ts // not necessary
+    ┣ options.ts
     ┗ server.ts
 ```
-Copy paste the following into the proper files
+```ts file=options.ts
+import { createOptions } from 'kavi'
+export const options = createOptions({})
+```
+
+The `server.ts` file is where all the API endpoints will be exported.
 ```ts file=server.ts
 export const router = {}
 export type Router = typeof router
 ```
-
+The `client.ts` file is where out client proxy is defined and will not be modified often.
 ```ts file=client.ts
 import { createApiClient } from 'kavi/client'
+import { options } from './options'
 import type { Router } from '$lib/kavi/server'
 
-export const api = createApiClient<Router>()
+export const api = createApiClient<Router>(options)
 ```
-
+Finally the `hooks.server.ts` is just so Kavi gets all the http requests. This will not be modified much either.
 ```ts file=hooks.server.ts
 import { createHandle } from 'kavi/server'
 import { api } from '$lib/kavi/server'
+import { options } from './options'
 
-export const handle = createHandle(api)
+export const handle = createHandle(api, options)
 ```
