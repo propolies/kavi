@@ -2,15 +2,14 @@
 
 [![npm version](https://flat.badgen.net/npm/v/kavi?color=orange)](https://npmjs.com/package/kavi)
 
-The easiest way to achieve typesafe apis in svelte
+The easiest way to achieve typesafe APIs in SvelteKit. This is meant to be an easy, simple and lightweight alternative to **tRPC-SvelteKit**. Kavi handles both `+page.server.ts`, `+page.ts` and `+page.svelte` files seamlessly.
 
 ## Install
 ```
-pnpm add kavi zod
+npm i kavi zod
 ```
 
 ## Usage
-Simply define a function
 ```ts
 // server
 export const router = {
@@ -24,7 +23,6 @@ export const router = {
     })
 }
 ```
-And voila, a typesafe api
 ```ts
 // client
 await api.add([1, 2]).ok() // 3
