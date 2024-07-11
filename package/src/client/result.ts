@@ -1,5 +1,5 @@
-import { AnyError, KaviError, type KaviErrorOptions } from "./errors.js"
-import type { MaybePromise } from "./types.js"
+import { anyError, AnyError, KaviError, type KaviErrorOptions } from "../errors.js"
+import type { MaybePromise } from "../types.js"
 
 type Errors<T extends KaviErrorOptions> = T extends KaviErrorOptions
   ? KaviError<T>
@@ -12,11 +12,11 @@ export class Result<T, const E extends KaviErrorOptions> {
     return value instanceof KaviError || value instanceof AnyError
   }
 
-  private getRes() {
+  private async getRes() {
     try {
       return this.fn()
     } catch (e) {
-      return new AnyError(e)
+      return anyError(e)
     }
   }
 

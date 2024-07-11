@@ -3,7 +3,7 @@ import tsconfigPaths from 'vite-tsconfig-paths'
 
 export default defineConfig({
   test: {
-    exclude: ["types"],
+    exclude: ["unit/**/*.types.test.ts"],
   },
   plugins: [tsconfigPaths()],
 })

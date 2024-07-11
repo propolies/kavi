@@ -38,6 +38,6 @@ export const router = {
 <button onclick={async () => {
   await api.add([1, 2]).ok()
 }}>
-  Say hello to server!
+  Add two numbers on the server
 </button>
 ```

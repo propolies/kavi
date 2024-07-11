@@ -28,6 +28,10 @@ html {
   scrollbar-gutter: stable;
 }
 
+html {
+  @apply stable;
+}
+
 html :has(.body-overflow-hidden) {
   @apply overflow-hidden;
 }

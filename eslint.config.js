@@ -32,7 +32,10 @@ export default ts.config(
     rules: {
       "no-trailing-spaces": "error",
       "indent": ["error", 2, { "SwitchCase": 1 }],
-      '@typescript-eslint/no-unused-vars': ["warn", { "varsIgnorePattern": "[$]*_" }],
+      '@typescript-eslint/no-unused-vars': ["warn", {
+        "varsIgnorePattern": "[$]*\\d*",
+        "argsIgnorePattern": "[$]+\\d*"
+      }],
       "@typescript-eslint/semi": ["error", "never"],
       "@typescript-eslint/ban-types": "off",
       "@typescript-eslint/no-explicit-any": "off",

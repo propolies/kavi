@@ -23,9 +23,23 @@ export class AnyError {
   constructor(readonly error: any) {}
 }
 
+export function anyError(e: any) {
+  return new AnyError(e)
+}
+
 export function error<const T extends KaviErrorOptions>(opts: T) {
   return new KaviError(opts)
 }
+
+const err = error({
+  code: 404,
+  data: {
+    a: 1
+  }
+})
+
+type E = typeof err
+//    ^?
 
 export function isError<T, E extends KaviErrorOptions>(value: T | KaviError<E>): value is KaviError<E> {
   return value instanceof KaviError

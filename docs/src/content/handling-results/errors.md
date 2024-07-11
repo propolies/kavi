@@ -8,7 +8,7 @@ type KaviErrorOptions = {
   code?: number,
   title?: string,
   description?: string,
-  data?: any
+  data?: object
 }
 ```
 

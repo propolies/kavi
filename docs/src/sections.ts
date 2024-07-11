@@ -15,7 +15,5 @@ export const sections = [
   ["handling-results", [
     "results",
     "errors"
-  ]],
-  ["websockets", [
   ]]
 ] satisfies [string, string[]][]

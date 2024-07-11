@@ -1,13 +1,16 @@
 import { createRecursiveProxy } from "./recursiveProxy.js"
-import { Result } from "../result.js"
+import { Result } from "./result.js"
 import type { ExtractErrorOptions, Pretty, RemoveErrorOptions } from "../types.js"
 import type { RequestEvent } from "@sveltejs/kit"
-import * as devalue from 'devalue'
-import { getOptions, type Options } from "../options.js"
+import type { Options } from "../options/options.js"
+
+type AwaitedFunc<T> = T extends (...args: infer Args) => infer R
+  ? (...args: Args) => Awaited<R>
+  : never
 
 type ToResult<T extends object> = {
   [K in keyof T]: T[K] extends (...args: infer Args) => any
-    ? (...args: Args) => Result<RemoveErrorOptions<T[K]>, ExtractErrorOptions<T[K]>>
+    ? (...args: Args) => Result<RemoveErrorOptions<AwaitedFunc<T[K]>>, ExtractErrorOptions<AwaitedFunc<T[K]>>>
     : T[K] extends object
       ? ToResult<T[K]>
       : never
@@ -46,13 +49,13 @@ export type LoadEvent = {
 }
 
 type ApiClient<T extends object> = Pretty<ToResult<OmitEvent<T>>>
-export function createApiClient<T extends object>(options?: Options) {
+export function createApiClient<T extends object>(options: Options) {
   let loadEvent: LoadEvent
   return createRecursiveProxy<{ with: (event: LoadEvent) => ApiClient<T> } & ApiClient<T>>(({ args, path }) => {
     if (path[0] === "with") {
       loadEvent = args[0] as LoadEvent
       return createRecursiveProxy<ApiClient<T>>(({ args, path }) => {
-        return handleApply({ args, path, loadEvent })
+        return handleApply({ args, path, loadEvent, options })
       })
     }
     return handleApply({ args, path, options })
@@ -63,21 +66,14 @@ function handleApply({ args, path, loadEvent, options }: {
   args: unknown[],
   path: string[],
   loadEvent?: LoadEvent,
-  options?: Options
+  options: Options
 }) {
-  const opts = getOptions(options)
   const _fetch = loadEvent?.fetch ?? globalThis._fetch ?? fetch
   return new Result(() => _fetch(`/kavi?api=${path.join(".")}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: devalue.stringify(
-      args[0],
-      opts.devalue.onStringify
-    )
-  }).then(async (res) => devalue.parse(
-    await res.text(),
-    opts.devalue.onParse
-  )))
+    body: options.devalue.stringify(args[0])
+  }).then(async (res) => options.devalue.parse(await res.text())))
 }

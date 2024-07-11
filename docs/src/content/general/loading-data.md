@@ -15,4 +15,4 @@ export const load: PageLoad = async (event) => {
 ```
 
 ## +page.server.ts
-Simply use the client api from `$lib/kavi/client`
+Simply use the client api from `$lib/kavi/client` as `event.fetch` will be used to bypass http, [read more](https://kit.svelte.dev/docs/load#making-fetch-requests)

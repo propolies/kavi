@@ -1,18 +1,8 @@
 import { Vector } from "$lib/vector"
 import { error } from "kavi"
-import { createWss, middleware, type WssRouterOptions } from "kavi/server"
+import { middleware } from "kavi/server"
 import z from 'zod'
 
-// Ws
-const wsRouter = {
-  msg: {
-    schema: z.string()
-  }
-} satisfies WssRouterOptions
-export type Wss = typeof wsRouter
-export const wss = createWss() // wsRouter
-
-// Api
 const mw = middleware.use(() => {
   if (Math.random() > .5) {
     return error({
@@ -33,7 +23,6 @@ export const apiRouter = {
   add: middleware
     .args(z.tuple([z.number(), z.number()]))
     .call(([a, b]) => {
-      console.log("HERE?")
       return a + b
     }),
   cookie: {
@@ -59,6 +48,14 @@ export const apiRouter = {
       return new Vector(1, 3)
     }),
   test: middleware
-    .call(() => console.log("hej"))
+    .args(z.string())
+    .call(() => {
+      console.log("hej")
+      return 1
+    }),
+  async: middleware
+    .call(async () => {
+      return 1
+    })
 }
 export type Api = typeof apiRouter
