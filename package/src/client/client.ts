@@ -1,16 +1,12 @@
 import { createRecursiveProxy } from "./recursiveProxy.js"
-import { Result } from "./result.js"
-import type { ExtractErrorOptions, Pretty, RemoveErrorOptions } from "../types.js"
+import { Result } from "../result.js"
+import type { Pretty } from "../types.js"
 import type { RequestEvent } from "@sveltejs/kit"
 import type { Options } from "../options/options.js"
 
-type AwaitedFunc<T> = T extends (...args: infer Args) => infer R
-  ? (...args: Args) => Awaited<R>
-  : never
-
 type ToResult<T extends object> = {
   [K in keyof T]: T[K] extends (...args: infer Args) => any
-    ? (...args: Args) => Result<RemoveErrorOptions<AwaitedFunc<T[K]>>, ExtractErrorOptions<AwaitedFunc<T[K]>>>
+    ? (...args: Args) => Result<Awaited<ReturnType<T[K]>>>
     : T[K] extends object
       ? ToResult<T[K]>
       : never

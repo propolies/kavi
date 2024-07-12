@@ -1,5 +1,5 @@
 ---
-description: How to handle results in Kavi.
+description: How to handle results
 ---
 
 A `Result` object will always be returned when calling the API. This allows us to handle errors in a typesafe and functional approach.

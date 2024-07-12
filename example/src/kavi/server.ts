@@ -1,13 +1,10 @@
 import { Vector } from "$lib/vector"
-import { error } from "kavi"
 import { middleware } from "kavi/server"
 import z from 'zod'
 
 const mw = middleware.use(() => {
   if (Math.random() > .5) {
-    return error({
-      code: 404
-    })
+    throw "nope"
   }
   return {
     a: 1

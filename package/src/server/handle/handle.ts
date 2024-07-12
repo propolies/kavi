@@ -3,7 +3,7 @@ import { CookiesProxy } from './cookies.js'
 import { setHeadersProxy } from "./headers.js"
 import type { AnyFunc } from "../../types.js"
 import type { Options } from "../../options/options.js"
-import { anyError } from "../../errors.js"
+import { AnyError } from "../../result.js"
 
 export function createHandle(router: object, options: Options): Handle {
   return async ({ event, resolve }) => {
@@ -23,7 +23,7 @@ export function createHandle(router: object, options: Options): Handle {
     try {
       body = await route(...reqBody ? [reqBody, { event }] : [{ event }])
     } catch (e) {
-      body = anyError(e)
+      body = new AnyError(e)
     }
     return new Response(options.devalue.stringify(body), {
       headers: {

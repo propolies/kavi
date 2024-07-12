@@ -1,19 +1,8 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 import { describe, expect, it, vi } from 'vitest'
-import { Result } from 'kavi/client/result'
-import { error } from 'kavi'
+import { Result } from 'kavi'
 
 describe('results expect', () => {
-  it("should throw the kavi error", async () => {
-    const spy = vi.fn()
-    try {
-      await new Result(() => error({})).expect()
-    } catch (e) {
-      spy()
-    }
-    expect(spy).toHaveBeenCalledOnce()
-  })
-
   it("should throw on any error", async () => {
     const spy = vi.fn()
     try {

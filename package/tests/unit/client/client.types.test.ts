@@ -2,9 +2,9 @@
 import { createApiClient, type LoadEvent } from 'kavi/client/client'
 import { describe, it } from '../utils.types'
 import { middleware } from 'kavi/server/middleware'
-import { AnyError, KaviError, createOptions, error } from 'kavi'
+import { createOptions } from 'kavi'
 import { assert, type Equals } from 'tsafe'
-import type { Result } from 'kavi/client/result'
+import type { Result } from 'kavi'
 import { z } from 'zod'
 
 const options = createOptions({})
@@ -32,43 +32,25 @@ describe("client", () => {
         .call(() => 1),
       hello: middleware
         .call(() => "hello"),
-      danger: middleware
-        .call(() => {
-          return Math.random() > .5 ? error({ code: 404 }) : 1
-        }),
       async: middleware
         .call(async () => 1),
-      asyncDanger: middleware
-        .call(async () => {
-          return Math.random() > .5 ? error({ code: 404 }) : 1
-        })
     }
 
     const client = createApiClient<typeof router>(options)
 
     assert<Equals<
       ReturnType<typeof client.one>,
-      Result<number, never>
+      Result<number>
     >>()
 
     assert<Equals<
       ReturnType<typeof client.hello>,
-      Result<string, never>
-    >>()
-
-    assert<Equals<
-      ReturnType<typeof client.danger>,
-      Result<1, { readonly code: 404 }>
+      Result<string>
     >>()
 
     assert<Equals<
       ReturnType<typeof client.async>,
-      Result<number, never>
-    >>()
-
-    assert<Equals<
-      ReturnType<typeof client.asyncDanger>,
-      Result<1, { readonly code: 404 }>
+      Result<number>
     >>()
   })
 
@@ -89,7 +71,7 @@ describe("client", () => {
     type Returns = ReturnType<typeof client.add>
     assert<Equals<
       Returns,
-      Result<number, never>
+      Result<number>
     >>()
   })
 
