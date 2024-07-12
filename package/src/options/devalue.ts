@@ -1,6 +1,6 @@
 import { ZodError } from "zod"
-import { anyError, AnyError, error, KaviError } from "../errors"
 import * as devalue from "devalue"
+import { AnyError } from "../result"
 
 export type DevalueOptions = Record<string, {
   stringify: (value: any) => any,
@@ -25,12 +25,9 @@ export const devalueOption = {
 
 export function getDevalue(options?: DevalueOptions) {
   const defaultDevalueOptions = {
-    KaviError: devalueOption
-      .stringify((value) => value instanceof KaviError && { ...value })
-      .parse(error),
     AnyError: devalueOption
       .stringify((value) => value instanceof AnyError && value.error)
-      .parse(anyError),
+      .parse((error) => new AnyError(error)),
     ZodError: devalueOption
       .stringify((value) => value instanceof ZodError && value.errors)
       .parse((errors) => new ZodError(errors))

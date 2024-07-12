@@ -1,17 +1,20 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 import { describe, expect, it, vi } from 'vitest'
-import { AnyError, error, KaviError } from 'kavi'
-import { Result } from 'kavi/client/result'
+import { AnyError, Result } from 'kavi'
 
 describe('results error', () => {
   it("should return error by default", async () => {
-    const err = await new Result(vi.fn(() => new KaviError({}))).error()
-    expect(err).toBeInstanceOf(KaviError)
+    const err = await new Result(vi.fn(() => {
+      throw 1
+    })).error()
+    expect(err).toEqual(new AnyError(1))
   })
 
   it("should call error if error", async () => {
     const spy = vi.fn()
-    await new Result(vi.fn(() => new KaviError({}))).error(spy)
+    await new Result(vi.fn(() => {
+      throw 1
+    })).error(spy)
 
     expect(spy).toHaveBeenCalledOnce()
   })
@@ -34,8 +37,10 @@ describe('results error', () => {
 
   it("should give lambda the result", async () => {
     let err: any = null
-    await new Result(() => error({})).error((e) => err = e)
+    await new Result(() => {
+      throw 1
+    }).error((e) => err = e)
 
-    expect(err).toEqual(error({}))
+    expect(err).toEqual(new AnyError(1))
   })
 })

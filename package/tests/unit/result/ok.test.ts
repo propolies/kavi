@@ -1,7 +1,6 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 import { describe, expect, it, vi } from 'vitest'
-import { error } from 'kavi'
-import { Result } from 'kavi/client/result'
+import { Result } from 'kavi'
 
 describe('results ok', () => {
   it("should call the callback if ok", async () => {
@@ -11,17 +10,10 @@ describe('results ok', () => {
     expect(spy).toHaveBeenCalledOnce()
   })
 
-  it("should not call ok if error", async () => {
-    const spy = vi.fn()
-    await new Result(vi.fn(() => error({}))).ok(spy)
-
-    expect(spy).toHaveBeenCalledTimes(0)
-  })
-
   it("should not call ok if thrown", async () => {
     const spy = vi.fn()
     await new Result(() => {
-      throw error({})
+      throw 1
     }).ok(spy)
 
     expect(spy).toHaveBeenCalledTimes(0)

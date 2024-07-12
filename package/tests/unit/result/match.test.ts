@@ -1,13 +1,14 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 import { describe, expect, it, vi } from 'vitest'
-import { KaviError } from 'kavi'
-import { Result } from 'kavi/client/result'
+import { Result } from 'kavi'
 
 describe('results match', () => {
   it("should call error if error", async () => {
     const errorSpy = vi.fn()
     const okSpy = vi.fn()
-    await new Result(() => new KaviError({})).match({
+    await new Result(() => {
+      throw 1
+    }).match({
       error: errorSpy,
       ok: okSpy
     })

@@ -1,12 +1,8 @@
 import { assert, Equals } from 'tsafe'
-import { AnyError, KaviError } from 'kavi/index'
-import { Result } from 'kavi/client/result'
+import { AnyError, Result } from 'kavi'
 import { describe, it } from '../utils.types'
 
-type Res = string
-type E = { code: 404 }
-
-const result = new Result<Res, E>(() => "result")
+const result = new Result<number>(() => 1)
 
 describe("result.types match", () => {
   it("should return default error", async () => {
@@ -17,32 +13,32 @@ describe("result.types match", () => {
     type R = typeof res
     assert<Equals<
       R,
-      number | (KaviError<E> | AnyError)
+      number | AnyError
     >>()
   })
 
   it("should return default ok", async () => {
     const res = await result.match({
-      error: () => 1
+      error: () => "str"
     })
 
     type R = typeof res
     assert<Equals<
       R,
-      Res | number
+      number | string
     >>()
   })
 
   it("should return a combination", async () => {
     const res = await result.match({
       ok: () => "ok",
-      error: () => 1
+      error: () => new Date()
     })
 
     type R = typeof res
     assert<Equals<
       R,
-      string | number
+      string | Date
     >>()
   })
 })
