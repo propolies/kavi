@@ -6,7 +6,7 @@ import { createApiClient, LoadEvent } from 'kavi/client/client'
 import { createOptions } from 'kavi/options'
 import { mockNeeds } from '../utils'
 
-const options = createOptions({})
+const options = createOptions()
 
 describe('client.middleware', () => {
   it("should throw a ZodError", async () => {

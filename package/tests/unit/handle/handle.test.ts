@@ -11,7 +11,7 @@ function createRequest(url: URL, data?: unknown) {
   })
 }
 
-const options = createOptions({})
+const options = createOptions()
 
 describe("handle", () => {
   it("should resolve if no api is found", async () => {
