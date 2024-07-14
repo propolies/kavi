@@ -9,7 +9,7 @@ export type Options = {
 
 export function createOptions(options: {
   devalue?: DevalueOptions
-}): Options {
+} = {}): Options {
   return {
     devalue: getDevalue(options.devalue)
   }

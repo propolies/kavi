@@ -26,7 +26,7 @@ describe("devalue", () => {
   })
 
   it("should use the default options", () => {
-    const { devalue } = createOptions({})
+    const { devalue } = createOptions()
 
     const stringed = devalue.stringify(new AnyError(1))
     const parsed = devalue.parse(stringed)

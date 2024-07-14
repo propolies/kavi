@@ -1,6 +1,6 @@
 {
   "name": "kavi",
-  "version": "0.0.0-pre.7",
+  "version": "0.0.0-pre.10",
   "description": "Typesafe api routes for sveltekit",
   "author": {
     "name": "propolies",
@@ -27,6 +27,9 @@
     "directory": "package"
   },
   "main": "index.js",
+  "bin": {
+    "init": "./dist/init.js"
+  },
   "scripts": {
     "dev": "rimraf dist && tsc --watch",
     "build": "rimraf dist && tsc",

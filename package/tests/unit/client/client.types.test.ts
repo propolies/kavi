@@ -7,7 +7,7 @@ import { assert, type Equals } from 'tsafe'
 import type { Result } from 'kavi'
 import { z } from 'zod'
 
-const options = createOptions({})
+const options = createOptions()
 
 describe("client", () => {
   it("should have the routes typed", () => {

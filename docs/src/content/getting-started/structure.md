@@ -1,6 +1,11 @@
 ---
 description: Heres the recommended project structure.
 ---
+Simply use 
+```
+npx kavi init
+```
+or add everything manually
 ```ts
 📂src
 ┣ hooks.server.ts
@@ -12,7 +17,7 @@ description: Heres the recommended project structure.
 ```
 ```ts file=options.ts
 import { createOptions } from 'kavi'
-export const options = createOptions({})
+export const options = createOptions()
 ```
 
 The `server.ts` file is where all the API endpoints will be exported.
@@ -31,8 +36,8 @@ export const api = createApiClient<Router>(options)
 Finally the `hooks.server.ts` is just so Kavi gets all the http requests. This will not be modified much either.
 ```ts file=hooks.server.ts
 import { createHandle } from 'kavi/server'
-import { api } from '$lib/kavi/server'
-import { options } from './options'
+import { router } from '$lib/kavi/server'
+import { options } from '$lib/kavi/options'
 
-export const handle = createHandle(api, options)
+export const handle = createHandle(router, options)
 ```
