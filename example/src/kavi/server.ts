@@ -47,7 +47,6 @@ export const apiRouter = {
   test: middleware
     .args(z.string())
     .call(() => {
-      console.log("hej")
       return 1
     }),
   async: middleware

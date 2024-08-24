@@ -12,7 +12,6 @@ export function createHandle(router: object, options: Options): Handle {
       return await resolve(event)
     }
 
-    globalThis._fetch = event.fetch
     const reqBody = options.devalue.parse(await event.request.text())
     event.cookies = new CookiesProxy(event.cookies)
     const headers: Record<string, string> = {}

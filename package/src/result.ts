@@ -8,7 +8,6 @@ export function isError<T>(value: T | AnyError): value is AnyError {
   return value instanceof AnyError
 }
 
-
 export class Result<T> {
   constructor(private fn: () => MaybePromise<T>) {}
 
@@ -44,14 +43,14 @@ export class Result<T> {
       : [res, undefined] as const
   }
 
-  async expect() {
-    const res = await this.fn()
-    if (isError(res)) throw res
+  async expect(customError?: (error: unknown) => unknown) {
+    const res = await this.runFn()
+    if (isError(res)) throw customError ? customError(res.error) : res.error
     return res
   }
 
   match<A, B>(opts: { ok: (value: T) => A, error: (err: AnyError) => B }): Promise<A | B>
-  match<A>(opts: { ok: (value: T) => A }): Promise<A | (AnyError)>
+  match<A>(opts: { ok: (value: T) => A }): Promise<A | AnyError>
   match<B>(opts: { error: (err: AnyError) => B }): Promise<T | B>
   async match<A, B>({ ok, error }: {
     ok?: (value: T) => A,
