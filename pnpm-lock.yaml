@@ -270,7 +270,7 @@ importers:
         version: 5.4.5
       vite-tsconfig-paths:
         specifier: ^4.3.2
-        version: 4.3.2(typescript@5.4.5)
+        version: 4.3.2(typescript@5.4.5)(vite@5.2.12)
       vitest:
         specifier: ^1.6.0
         version: 1.6.0
@@ -4280,22 +4280,6 @@ packages:
       - sugarss
       - supports-color
       - terser
-    dev: true
-
-  /vite-tsconfig-paths@4.3.2(typescript@5.4.5):
-    resolution: {integrity: sha512-0Vd/a6po6Q+86rPlntHye7F31zA2URZMbH8M3saAZ/xR9QoGN/L21bxEGfXdWmFdNkqPpRdxFT7nmNe12e9/uA==}
-    peerDependencies:
-      vite: '*'
-    peerDependenciesMeta:
-      vite:
-        optional: true
-    dependencies:
-      debug: 4.3.5
-      globrex: 0.1.2
-      tsconfck: 3.1.1(typescript@5.4.5)
-    transitivePeerDependencies:
-      - supports-color
-      - typescript
     dev: true
 
   /vite-tsconfig-paths@4.3.2(typescript@5.4.5)(vite@5.2.12):

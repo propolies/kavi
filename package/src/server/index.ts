@@ -1,2 +1,2 @@
 export * from './handle/index.js'
-export { middleware } from './middleware.js'
+export { middleware, Middleware } from './middleware.js'

@@ -4,15 +4,27 @@ import { Result } from 'kavi'
 
 describe('results expect', () => {
   it("should throw on any error", async () => {
-    const spy = vi.fn()
+    let error
     try {
       await new Result(() => {
         throw 1
       }).expect()
     } catch (e) {
-      spy()
+      error = e
     }
-    expect(spy).toHaveBeenCalledOnce()
+    expect(error).toEqual(1)
+  })
+
+  it("should throw the custom error", async () => {
+    let error
+    try {
+      await new Result(() => {
+        throw 1
+      }).expect((e) => e as number + 2)
+    } catch (e) {
+      error = e
+    }
+    expect(error).toEqual(3)
   })
 
   it("should return value if no error", async () => {

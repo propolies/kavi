@@ -34,7 +34,7 @@ Will run only if an error has occured.
 await api.route()
   .error()
   // or
-  .error((error) => /* typed error */ )
+  .error((error) => ...)
 ```
 See how you can handle [errors](/docs/handling-results/errors).
 
@@ -56,4 +56,8 @@ if (error) return
 ```
 
 ### expect
-Will throw errors and expect the value to be non interupted.
+Will run the function like normal and throw any errors. To throw custom errors pass a callback.
+```ts
+await api.route()
+  .expect((currentError) => customError)
+```

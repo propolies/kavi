@@ -64,7 +64,10 @@ function handleApply({ args, path, loadEvent, options }: {
   loadEvent?: LoadEvent,
   options: Options
 }) {
-  const _fetch = loadEvent?.fetch ?? globalThis._fetch ?? fetch
+  const _fetch = loadEvent?.fetch ?? fetch
+  if (typeof window === "undefined" && !loadEvent?.fetch) {
+    throw new Error("Cannot use kavi client on the server without '.with(event)': https://propolies.github.io/kavi/docs/general/loading-data")
+  }
   return new Result(() => _fetch(`/kavi?api=${path.join(".")}`, {
     method: 'POST',
     headers: {

@@ -1,6 +1,6 @@
 {
   "name": "kavi",
-  "version": "0.0.0-pre.10",
+  "version": "0.0.0-pre.11",
   "description": "Typesafe api routes for sveltekit",
   "author": {
     "name": "propolies",
