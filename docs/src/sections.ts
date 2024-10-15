@@ -10,7 +10,8 @@ export const sections = [
     "middlewares",
     "marshalling",
     "nesting-routes",
-    "loading-data"
+    "loading-data",
+    "forms"
   ]],
   ["handling-results", [
     "results",

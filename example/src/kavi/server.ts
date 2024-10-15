@@ -1,6 +1,7 @@
 import { Vector } from "$lib/vector"
 import { middleware } from "kavi/server"
 import z from 'zod'
+import { UserSchema } from "./schemas"
 
 const mw = middleware.use(() => {
   if (Math.random() > .5) {
@@ -52,6 +53,11 @@ export const apiRouter = {
   async: middleware
     .call(async () => {
       return 1
+    }),
+  formTest: middleware
+    .args(UserSchema)
+    .call(async (data) => {
+      console.log("data: ", data)
     })
 }
 export type Api = typeof apiRouter
