@@ -44,7 +44,6 @@ export function Form<Data extends Record<string, unknown>, R, Fields extends Rec
       }
 
       form.loading = true
-      await new Promise(r => setTimeout(r, 1000))
       await api(beforesubmit(form.fields)).match({
         ok: onsuccess ?? (() => {}),
         error: (e) => {

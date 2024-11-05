@@ -1,5 +1,5 @@
 ---
-description: Creating new endpoints as functions.
+description: Functions are endpoints that can later be called on the client.
 ---
 
 ## call

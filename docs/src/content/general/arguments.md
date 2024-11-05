@@ -1,5 +1,5 @@
 ---
-description: How to pass arguments to functions
+description: 
 ---
 
 ## Args

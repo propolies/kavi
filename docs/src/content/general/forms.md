@@ -43,7 +43,7 @@ Form(api.route, {
   beforeSubmit: (fields) => new Vector(x, y)
 })
 ```
-This is identical to doing
+This is identical to
 ```ts
 api.route(new Vector(x, y))
 ```

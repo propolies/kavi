@@ -1,8 +1,8 @@
 ---
-description: How to create custom middlewares that run on each call.
+description: Middlewares are functions that are called on each call
 ---
 
-Create a custom middleware from the default shipped `middleware` using `.use`.
+The easiest way to make new middleware is with `middleware` and `.use`.
 ```ts
 import { middleware } from 'kavi/server'
 
