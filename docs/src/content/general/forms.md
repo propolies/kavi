@@ -51,5 +51,24 @@ api.route(new Vector(x, y))
 ## Errors
 The `KaviForm` which is returned from `Form` has the property `errors`. This is used to check which field errors we have.
 
+To throw your custom errors on the server
+```ts
+import { formError } from 'kavi/client'
+
+middleware.call(() => throw fromError({
+  username: "Username is missing"
+}))
+```
+
+To throw your custom errors on the client
+```ts
+import { formError } from 'kavi/client'
+
+const form = Form(...)
+form.errors = formError({
+  username: "Username is missing"
+})
+```
+
 ### Autofocus errors
 To autofocus the first error in a form use `aria-invalid`.
