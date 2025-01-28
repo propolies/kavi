@@ -16,6 +16,8 @@ npx kavi init
     ┣ client.ts
     ┣ options.ts
     ┗ server.ts
+┗ 📂routes
+  ┗ +layout.ts
 ```
 ```ts file=options.ts
 import { createOptions } from 'kavi'
@@ -34,6 +36,13 @@ import { options } from './options'
 import type { Router } from '$lib/kavi/server'
 
 export const api = createApiClient<Router>(options)
+```
+The `+layout.ts` file is where we need to make sure that load functions use the correct event. This should be the very root layout file.
+```ts file=layout.ts
+import { initClientEvent } from 'kavi/client'
+
+// important that this runs first
+export const load = initClientEvent
 ```
 Finally the `hooks.server.ts` is for Kavi to get all the http requests. This will not be modified much either.
 ```ts file=hooks.server.ts

@@ -1,9 +1,10 @@
 import { Vector } from "$lib/vector"
-import { middleware } from "kavi/server"
+import { all } from "kavi/server"
+import { ctx } from "kavi/server"
 import z from 'zod'
 import { UserSchema } from "./schemas"
 
-const mw = middleware.use(() => {
+const mw = all.chain(() => {
   if (Math.random() > .5) {
     throw "nope"
   }
@@ -13,26 +14,26 @@ const mw = middleware.use(() => {
 })
 
 export const apiRouter = {
-  ping: middleware
+  ping: all
     .call(() => {
       console.log("[server] got ping")
       return "pong"
     }),
-  add: middleware
+  add: all
     .args(z.tuple([z.number(), z.number()]))
     .call(([a, b]) => {
       return a + b
     }),
   cookie: {
-    add: middleware
-      .call(({ event }) => {
-        event.cookies.set("theCookie", "123", {
+    add: all
+      .call(() => {
+        ctx.event.cookies.set("theCookie", Math.random().toString().slice(2, 6), {
           path: "/"
         })
       }),
-    delete: middleware
-      .call(({ event }) => {
-        event.cookies.delete("theCookie", {
+    delete: all
+      .call(() => {
+        ctx.event.cookies.delete("theCookie", {
           path: "/"
         })
       })
@@ -41,20 +42,20 @@ export const apiRouter = {
     .call(() => {
       return "returned"
     }),
-  custom: middleware
+  custom: all
     .call(() => {
       return new Vector(1, 3)
     }),
-  test: middleware
+  test: all
     .args(z.string())
     .call(() => {
       return 1
     }),
-  async: middleware
+  async: all
     .call(async () => {
       return 1
     }),
-  formTest: middleware
+  formTest: all
     .args(UserSchema)
     .call(async (data) => {
       console.log("data: ", data)

@@ -4,9 +4,10 @@ import { setHeadersProxy } from "./headers.js"
 import type { AnyFunc } from "../../types.js"
 import type { Options } from "../../options/options.js"
 import { AnyError } from "../../result.js"
-import { asyncLocalStorage } from "../../context.js"
+import { ctx, asyncLocalStorage } from "../context.js"
 
 export function createHandle(router: object, options: Options): Handle {
+  globalThis.ctx = ctx
   return async ({ event, resolve }) => {
     return asyncLocalStorage.run({ event }, async () => {
       const api = event.url.searchParams.get('api')

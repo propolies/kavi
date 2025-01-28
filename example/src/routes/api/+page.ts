@@ -1,6 +1,6 @@
-import type { PageLoad } from './$types'
 import { api } from '$lib/kavi/client'
+import { browser } from '$app/environment'
 
-export const load: PageLoad = async (event) => {
-  console.log("[load  ] got", await api.with(event).ping().ok())
+export const load = async (event) => {
+  console.log("[load  ] got", await api.ping().ok())
 }

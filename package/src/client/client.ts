@@ -2,7 +2,7 @@ import { createRecursiveProxy } from "./recursiveProxy.js"
 import { Result } from "../result.js"
 import type { Pretty } from "../types.js"
 import type { Options } from "../options/options.js"
-import { ctx } from "../context.js"
+import { LoadEvent } from "@sveltejs/kit"
 
 type ToResult<T extends object> = {
   [K in keyof T]: T[K] extends (...args: infer Args) => any
@@ -24,7 +24,7 @@ function handleApply({ args, path, options }: {
   path: string[],
   options: Options
 }) {
-  const _fetch = ctx.event?.fetch ?? fetch
+  const _fetch = globalThis.ctx?.event.fetch ?? fetch
   return new Result(() => _fetch(`/kavi?api=${path.join(".")}`, {
     method: 'POST',
     headers: {
@@ -32,4 +32,13 @@ function handleApply({ args, path, options }: {
     },
     body: options.devalue.stringify(args[0])
   }).then(async (res) => options.devalue.parse(await res.text())))
+}
+
+export function initClientEvent(event: LoadEvent) {
+  if (typeof window === "undefined") return
+
+  globalThis.ctx = {
+    // @ts-expect-error Should find a better way to isole only fetch
+    event
+  }
 }

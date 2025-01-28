@@ -18,7 +18,7 @@
     Add 1 + 2
   </button>
   <button
-    onclick={async () => { console.log(await api.cookie.add().ok()) }}
+    onclick={async () => { console.log(await api.cookie.add().expect()) }}
     class="btn btn-accent"
   >
     Add theCookie
@@ -80,16 +80,4 @@
   class="btn btn-accent"
 >
   Async call
-</button>
-
-<button
-  onclick={async () => {
-    // @ts-expect-error "Should error"
-    const [res, err] = await api.test(1).run()
-    console.log("res", res)
-    console.log("err", err)
-  }}
-  class="btn btn-accent"
->
-  test
 </button>
