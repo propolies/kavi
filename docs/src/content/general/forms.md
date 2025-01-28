@@ -60,7 +60,7 @@ middleware.call(() => throw fromError({
 }))
 ```
 
-To throw your custom errors on the client
+To set your custom errors on the client
 ```ts
 import { formError } from 'kavi/client'
 

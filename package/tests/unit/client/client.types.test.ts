@@ -1,7 +1,7 @@
 /* eslint @typescript-eslint/no-unused-vars: 0 */
-import { createApiClient, type LoadEvent } from 'kavi/client/client'
+import { createApiClient } from 'kavi/client/client'
 import { describe, it } from '../utils.types'
-import { middleware } from 'kavi/server/middleware'
+import { all } from 'kavi/server/middleware'
 import { createOptions } from 'kavi'
 import { assert, type Equals } from 'tsafe'
 import type { Result } from 'kavi'
@@ -12,9 +12,9 @@ const options = createOptions()
 describe("client", () => {
   it("should have the routes typed", () => {
     const router = {
-      one: middleware
+      one: all
         .call(() => 1),
-      two: middleware
+      two: all
         .call(() => 2)
     }
 
@@ -22,17 +22,17 @@ describe("client", () => {
 
     assert<Equals<
       keyof typeof client,
-      "with" | "one" | "two"
+      "one" | "two"
     >>()
   })
 
   it("should have proper results", () => {
     const router = {
-      one: middleware
+      one: all
         .call(() => 1),
-      hello: middleware
+      hello: all
         .call(() => "hello"),
-      async: middleware
+      async: all
         .call(async () => 1),
     }
 
@@ -56,7 +56,7 @@ describe("client", () => {
 
   it("should work with args", () => {
     const router = {
-      add: middleware
+      add: all
         .args(z.tuple([z.number(), z.number()]))
         .call(([a, b]) => a + b)
     }
@@ -72,25 +72,6 @@ describe("client", () => {
     assert<Equals<
       Returns,
       Result<number>
-    >>()
-  })
-
-  it("should accept LoadEvent", () => {
-    const router = {
-      one: middleware
-        .call(() => 1)
-    }
-
-    const client = createApiClient<typeof router>(options)
-
-    assert<Equals<
-      Parameters<typeof client.with>,
-      [arg: LoadEvent]
-    >>()
-
-    assert<Equals<
-      keyof ReturnType<typeof client.with>,
-      "one"
     >>()
   })
 })

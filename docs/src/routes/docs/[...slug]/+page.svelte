@@ -28,4 +28,8 @@
   .prose {
     hr { @apply my-8; }
   }
+
+  :global(h1, h2, h3, h4) {
+    scroll-margin-top: 5rem;
+  }
 </style>

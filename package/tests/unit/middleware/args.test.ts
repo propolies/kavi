@@ -1,16 +1,14 @@
-/* eslint @typescript-eslint/no-explicit-any: 0 */
 import { describe, expect, it } from 'vitest'
-import { middleware } from 'kavi/server/middleware'
+import { all } from 'kavi/server/middleware'
 import z, { ZodError } from 'zod'
-import { mockNeeds } from '../utils'
 
 describe('middleware args', () => {
-  it("should get the args and ctx", async () => {
-    const res = await middleware.use(() => ({
+  it("should get the parameters and context", async () => {
+    const res = await all.chain(() => ({
       num: 3
     }))
       .args(z.number())
-      .call((arg, { num }) => arg + num)(2, mockNeeds)
+      .call((arg, { num }) => arg + num)(2)
 
     expect(res).toEqual(5)
   })
@@ -18,7 +16,7 @@ describe('middleware args', () => {
   it("should return ZodErrors", async () => {
     let res
     try {
-      await middleware.args(z.string())
+      await all.args(z.string())
         // @ts-expect-error "Should fail"
         .call((arg, ctx) => arg + ctx.number)(1, {})
     } catch(e) {

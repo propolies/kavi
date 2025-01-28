@@ -36,4 +36,13 @@ export const options = createOptions({
   }
 })
 ```
-We have no made sure that both server and client agree on how to handle `Date`.
+We have now made sure that both server and client agree on how to handle `Date`.
+
+## Transport Hook
+Since **sveltekit 2.11.0** you can also make the marshalling work for returned data in `load functions` you need to add the devalue options to
+```ts file=hooks.ts
+import { ??? } from './kavi/options'
+import type { Transport } from '@sveltejs/kit'
+
+export const transport: Transport = ???
+```

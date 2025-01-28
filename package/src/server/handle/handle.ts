@@ -4,32 +4,35 @@ import { setHeadersProxy } from "./headers.js"
 import type { AnyFunc } from "../../types.js"
 import type { Options } from "../../options/options.js"
 import { AnyError } from "../../result.js"
+import { asyncLocalStorage } from "../../context.js"
 
 export function createHandle(router: object, options: Options): Handle {
   return async ({ event, resolve }) => {
-    const api = event.url.searchParams.get('api')
-    if (!event.url.pathname.startsWith('/kavi') || !api) {
-      return await resolve(event)
-    }
-
-    const reqBody = options.devalue.parse(await event.request.text())
-    event.cookies = new CookiesProxy(event.cookies)
-    const headers: Record<string, string> = {}
-    event.setHeaders = setHeadersProxy(headers)
-    const route = findRoute(api.split("."), router)
-
-    let body
-    try {
-      body = await route(...reqBody ? [reqBody, { event }] : [{ event }])
-    } catch (e) {
-      body = new AnyError(e)
-    }
-    return new Response(options.devalue.stringify(body), {
-      headers: {
-        ...headers,
-        'Content-Type': 'application/json',
-        'Set-Cookie': (event.cookies as CookiesProxy).getSetCookies(),
+    return asyncLocalStorage.run({ event }, async () => {
+      const api = event.url.searchParams.get('api')
+      if (!event.url.pathname.startsWith('/kavi') || !api) {
+        return await resolve(event)
       }
+
+      const reqBody = options.devalue.parse(await event.request.text())
+      event.cookies = new CookiesProxy(event.cookies)
+      const headers: Record<string, string> = {}
+      event.setHeaders = setHeadersProxy(headers)
+      const route = findRoute(api.split("."), router)
+
+      let body
+      try {
+        body = await route(...reqBody ? [reqBody, { event }] : [{ event }])
+      } catch (e) {
+        body = new AnyError(e)
+      }
+      return new Response(options.devalue.stringify(body), {
+        headers: {
+          ...headers,
+          'Content-Type': 'application/json',
+          'Set-Cookie': (event.cookies as CookiesProxy).getSetCookies(),
+        }
+      })
     })
   }
 }

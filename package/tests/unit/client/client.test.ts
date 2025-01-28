@@ -1,17 +1,17 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 import { describe, expect, it } from 'vitest'
-import { middleware } from 'kavi/server/middleware'
+import { all } from 'kavi/server/middleware'
 import z, { ZodError } from 'zod'
-import { createApiClient, LoadEvent } from 'kavi/client/client'
+import { createApiClient } from 'kavi/client/client'
 import { createOptions } from 'kavi/options'
-import { mockNeeds } from '../utils'
+import { asyncLocalStorage } from 'kavi/context'
 
 const options = createOptions()
 
 describe('client.middleware', () => {
-  it("should throw a ZodError", async () => {
+  it("should throw a ZodError on wrong argument", async () => {
     const router = {
-      test: middleware
+      test: all
         .args(z.string())
         .call(() => 1)
     }
@@ -19,14 +19,17 @@ describe('client.middleware', () => {
     const mockEvent = {
       fetch: ($: string, $$: any) => ({
         then: ($: any) => {
-          // @ts-expect-error "Should fail"
-          return router.test(1, mockNeeds)
+          // @ts-expect-error Should fail
+          return router.test(1)
         }
       })
     }
 
-    const client = createApiClient<typeof router>(options)
-    const [res, err] = await client.with(mockEvent as any as LoadEvent).test("").run()
+    const [res, err] = await asyncLocalStorage.run({ event: mockEvent }, async () => {
+      const client = createApiClient<typeof router>(options)
+      return client.test("").run()
+    })
+
     expect(res).toEqual(undefined)
     expect(err?.error).toBeInstanceOf(ZodError)
   })

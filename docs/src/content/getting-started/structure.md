@@ -5,8 +5,7 @@ description: Heres the recommended project structure.
 ```
 npx kavi init
 ```
-> This will overwrite `hooks.server.ts`
-
+> This will overwrite `hooks.server.ts` and the other files mentioned below.
 
 ## Setup manually
 ```ts

@@ -5,7 +5,7 @@ description: How to handle results
 A `Result` object will always be returned when calling the API. This allows us to handle errors in a typesafe and functional approach.
 
 ## Use case
-Say we want to update a user, but only if all goes well. 
+If we eg. want to update a store when everything goes well, we can use the [ok](#ok) property. 
 ```svelte file=+page.svelte
 <script lang="ts">
   import { api } from '$lib/kavi/client'

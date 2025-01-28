@@ -2,4 +2,4 @@ packages:
   - "./package/**"
   - "./example/**"
   - "./docs/**"
-  - "./tests**"
+  - "./tests/**"

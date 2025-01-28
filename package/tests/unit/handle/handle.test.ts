@@ -1,6 +1,6 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
 import { describe, expect, it, vi } from 'vitest'
-import { createHandle, middleware } from 'kavi/server'
+import { createHandle, all } from 'kavi/server'
 import { AnyError, createOptions } from 'kavi/index.js'
 import { z, ZodError } from 'zod'
 
@@ -66,7 +66,7 @@ describe("handle", () => {
   it("should throw ZodError", async () => {
     const url = new URL("http:/localhost:4573/kavi?api=zod")
     const handle = createHandle({
-      zod: middleware
+      zod: all
         .args(z.number())
         .call(() => {})
     }, options)
@@ -87,7 +87,7 @@ describe("handle", () => {
   it("should work with args", async () => {
     const url = new URL("http:/localhost:4573/kavi?api=zod")
     const handle = createHandle({
-      zod: middleware
+      zod: all
         .args(z.number())
         .call((args) => args)
     }, options)

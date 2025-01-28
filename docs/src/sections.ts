@@ -7,10 +7,11 @@ export const sections = [
   ["general", [
     "creating-functions",
     "arguments",
+    "validating-output",
     "middlewares",
+    "event",
     "marshalling",
     "nesting-routes",
-    "loading-data",
     "forms"
   ]],
   ["handling-results", [

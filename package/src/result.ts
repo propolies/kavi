@@ -28,6 +28,13 @@ export class Result<T> {
     return ok ? ok(res) : res
   }
 
+  default<Value>(value: Value): Promise<T | Value> {
+    return this.match({
+      ok: (value) => value,
+      error: () => value
+    })
+  }
+
   error(): Promise<AnyError | undefined>
   error<Return>(err: (value: AnyError) => Return): Promise<Return | undefined>
   async error<Return>(err?: (value: AnyError) => Return) {
