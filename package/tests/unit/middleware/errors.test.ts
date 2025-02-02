@@ -1,9 +1,9 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
-import { describe, expect, it, vi } from 'vitest'
-import { all } from 'kavi/server/middleware'
-import { z } from 'zod'
+import { describe, expect, it, vi } from "vitest"
+import { all } from "kavi/server/middleware"
+import { z } from "zod"
 
-describe('middleware errors', () => {
+describe("middleware errors", () => {
   it("should not call 'call' if error", async () => {
     const spy = vi.fn()
     try {
@@ -12,7 +12,7 @@ describe('middleware errors', () => {
           throw 1
         })
         .call(spy)()
-    } catch(e) {
+    } catch (e) {
       //
     }
     expect(spy).toHaveBeenCalledTimes(0)
@@ -27,7 +27,7 @@ describe('middleware errors', () => {
         })
         .args(z.null())
         .call(spy)(null)
-    } catch(e) {
+    } catch (e) {
       //
     }
     expect(spy).toHaveBeenCalledTimes(0)
@@ -41,7 +41,7 @@ describe('middleware errors', () => {
           throw 1
         })
         .call(vi.fn)()
-    } catch(e) {
+    } catch (e) {
       res = e
     }
     expect(res).toEqual(1)
@@ -56,7 +56,7 @@ describe('middleware errors', () => {
         })
         .args(z.null())
         .call(vi.fn)(null)
-    } catch(e) {
+    } catch (e) {
       res = e
     }
     expect(res).toEqual(1)
@@ -74,7 +74,7 @@ describe('middleware errors', () => {
           return {}
         })
         .call(vi.fn)()
-    } catch(e) {
+    } catch (e) {
       //
     }
     expect(spy).toHaveBeenCalledTimes(0)
@@ -85,7 +85,7 @@ describe('middleware errors', () => {
     try {
       await all
         .args(z.string())
-      // @ts-expect-error "Should fail"
+        // @ts-expect-error "Should fail"
         .call(spy)(1)
     } catch (e) {
       //

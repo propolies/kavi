@@ -1,8 +1,12 @@
 import { tick } from "svelte"
 import type { AnyError, Result } from "../result.js"
-import z, { ZodError } from 'zod'
+import z, { ZodError } from "zod"
 
-export function Form<Data extends Record<string, unknown>, R, Fields extends Record<string, string | number>>(
+export function Form<
+  Data extends Record<string, unknown>,
+  R,
+  Fields extends Record<string, string | number>,
+>(
   api: (arg: Data) => Result<R>,
   {
     schema,
@@ -10,16 +14,17 @@ export function Form<Data extends Record<string, unknown>, R, Fields extends Rec
     onerror,
     beforesubmit,
   }: {
-    schema: z.ZodType<Fields>,
-    onsuccess?: (arg: R) => void,
-    onerror?: (e: AnyError) => void,
+    schema: z.ZodType<Fields>
+    onsuccess?: (arg: R) => void
+    onerror?: (e: AnyError) => void
     beforesubmit: (fields: Fields) => Data
   },
 ) {
-
-  type Errors = z.ZodError<{
-    [P in keyof Data]?: any
-  } & Fields>["formErrors"]["fieldErrors"]
+  type Errors = z.ZodError<
+    {
+      [P in keyof Data]?: any
+    } & Fields
+  >["formErrors"]["fieldErrors"]
 
   const form = $state({
     loading: false,
@@ -58,11 +63,11 @@ export function Form<Data extends Record<string, unknown>, R, Fields extends Rec
 }
 
 export function formError(errors: Record<string, string>) {
-  const zodErrors = Object.entries(errors).map(([ path, message ]) => {
+  const zodErrors = Object.entries(errors).map(([path, message]) => {
     return {
       code: z.ZodIssueCode.custom,
       path: [path],
-      message
+      message,
     }
   })
   return new ZodError(zodErrors)

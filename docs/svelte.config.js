@@ -1,33 +1,34 @@
-import adapter from '@sveltejs/adapter-static'
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
-import { mdsx } from 'mdsx'
-import { mdsxConfig } from './mdsx.config.js'
-import { readdirSync } from 'fs'
+import adapter from "@sveltejs/adapter-static"
+import { vitePreprocess } from "@sveltejs/vite-plugin-svelte"
+import { mdsx } from "mdsx"
+import { mdsxConfig } from "./mdsx.config.js"
+import { readdirSync } from "fs"
 import { fileURLToPath } from "url"
-import MagicString from 'magic-string'
+import MagicString from "magic-string"
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
 
 // prerender /content/**/*.md as /docs/**/*
-const entries = readdirSync(__dirname + "/src/content")
-  .flatMap((folder) => readdirSync(`${__dirname}/src/content/${folder}`)
-    .map((file) => `/docs/${folder}/${file.slice(0, -3)}`)
-  )
+const entries = readdirSync(__dirname + "/src/content").flatMap((folder) =>
+  readdirSync(`${__dirname}/src/content/${folder}`).map(
+    (file) => `/docs/${folder}/${file.slice(0, -3)}`,
+  ),
+)
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
   preprocess: [mdsx(mdsxConfig), baseurl(), vitePreprocess()],
-  extensions: ['.svelte', '.md'],
+  extensions: [".svelte", ".md"],
   kit: {
     adapter: adapter(),
     prerender: {
-      entries: [...entries]
+      entries: [...entries],
     },
     files: {
-      lib: "src"
+      lib: "src",
     },
     paths: {
-      base: process.argv.includes('dev') ? '' : process.env.BASE_PATH,
-      relative: false
+      base: process.argv.includes("dev") ? "" : process.env.BASE_PATH,
+      relative: false,
     },
   },
   onwarn(warning, handler) {
@@ -36,7 +37,7 @@ const config = {
       return
     }
     handler(warning)
-  }
+  },
 }
 
 function baseurl() {
@@ -61,9 +62,9 @@ function baseurl() {
 
       return {
         code: s.toString(),
-        map: s.generateMap({ file: filename, hires: true })
+        map: s.generateMap({ file: filename, hires: true }),
       }
-    }
+    },
   }
 }
 

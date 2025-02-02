@@ -9,6 +9,6 @@ export const load: PageLoad = async ({ params: { slug } }) => {
   const { default: component, metadata } = await resolve()
   return {
     component,
-    metadata
+    metadata,
   }
 }

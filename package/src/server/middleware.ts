@@ -1,20 +1,16 @@
 import type { Dict, MaybePromise } from "../types.js"
-import type { z } from 'zod'
+import type { z } from "zod"
 
 export class Middleware<Ctx extends Dict> {
   constructor(public run: () => MaybePromise<Ctx>) {}
 
-  chain = <NewCtx extends Dict>(
-    newRun: (ctx: Ctx) => MaybePromise<NewCtx>
-  ): Middleware<NewCtx> => {
+  chain = <NewCtx extends Dict>(newRun: (ctx: Ctx) => MaybePromise<NewCtx>): Middleware<NewCtx> => {
     const { run } = this
-    return new Middleware(
-      async () => newRun(await run())
-    )
+    return new Middleware(async () => newRun(await run()))
   }
 
   merge = <NewCtx extends Dict>(
-    newRun: (ctx: Ctx) => MaybePromise<NewCtx>
+    newRun: (ctx: Ctx) => MaybePromise<NewCtx>,
   ): Middleware<Ctx & NewCtx> => {
     const { run } = this
     return new Middleware(async () => {
@@ -22,7 +18,7 @@ export class Middleware<Ctx extends Dict> {
       const newCtx = await newRun(ctx)
       return {
         ...ctx,
-        ...newCtx
+        ...newCtx,
       }
     })
   }
@@ -34,7 +30,7 @@ export class Middleware<Ctx extends Dict> {
         const result = await fn(await this.run())
         const parsedResult = schema.parse(result) as Returns
         return parsedResult
-      }
+      },
     }
   }
 
@@ -51,7 +47,7 @@ export class Middleware<Ctx extends Dict> {
               const parsedResult = schema.parse(result) as Returns
               return parsedResult
             }
-          }
+          },
         }
       },
       call: <Return>(fn: (args: Args, ctx: Ctx) => Return) => {
@@ -59,14 +55,13 @@ export class Middleware<Ctx extends Dict> {
           const parsedArgs = schema.parse(args)
           return fn(parsedArgs as Args, await this.run())
         }
-      }
+      },
     }
   }
 
   call = <Return>(fn: (ctx: Ctx) => Return) => {
     return async () => fn(await this.run())
   }
-
 }
 
 export const all = new Middleware(() => ({}))

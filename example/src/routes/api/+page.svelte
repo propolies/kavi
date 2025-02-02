@@ -5,26 +5,34 @@
 
 <main class="m-4 flex gap-4">
   <button
-    onclick={async () => { console.log(await api.ping().ok()) }}
+    onclick={async () => {
+      console.log(await api.ping().ok())
+    }}
     class="btn btn-accent"
   >
     Ping
   </button>
 
   <button
-    onclick={async () => { console.log(await api.add([1, 2]).ok()) }}
+    onclick={async () => {
+      console.log(await api.add([1, 2]).ok())
+    }}
     class="btn btn-accent"
   >
     Add 1 + 2
   </button>
   <button
-    onclick={async () => { console.log(await api.cookie.add().expect()) }}
+    onclick={async () => {
+      console.log(await api.cookie.add().expect())
+    }}
     class="btn btn-accent"
   >
     Add theCookie
   </button>
   <button
-    onclick={async () => { console.log(await api.cookie.delete().ok()) }}
+    onclick={async () => {
+      console.log(await api.cookie.delete().ok())
+    }}
     class="btn btn-accent"
   >
     Delete theCookie
@@ -54,7 +62,7 @@
       },
       error(e) {
         console.log("error: ", e)
-      }
+      },
     })
   }}
   class="btn btn-accent"

@@ -7,14 +7,15 @@
 </script>
 
 <!-- Hack transition auto -->
-<div class="transition-all grid {show
-  ? `
-    ${transitionX && "grid-cols-[1fr]"} 
-    ${transitionY && "grid-rows-[1fr]"}`
-  : `
-    ${transitionX && "grid-cols-[0fr]"} 
-    ${transitionY && "grid-rows-[0fr]"}`
-}">
+<div
+  class="transition-all grid {show
+    ? `
+    ${transitionX && 'grid-cols-[1fr]'} 
+    ${transitionY && 'grid-rows-[1fr]'}`
+    : `
+    ${transitionX && 'grid-cols-[0fr]'} 
+    ${transitionY && 'grid-rows-[0fr]'}`}"
+>
   <div class="overflow-hidden">
     <slot />
   </div>

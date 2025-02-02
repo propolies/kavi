@@ -1,8 +1,8 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
-import { describe, expect, it, vi } from 'vitest'
-import { Result } from 'kavi'
+import { describe, expect, it, vi } from "vitest"
+import { Result } from "kavi"
 
-describe('results ok', () => {
+describe("results ok", () => {
   it("should call the callback if ok", async () => {
     const spy = vi.fn()
     await new Result(vi.fn()).ok(spy)
@@ -21,7 +21,7 @@ describe('results ok', () => {
 
   it("should give lambda the result", async () => {
     let value: any = null
-    await new Result(() => 1).ok((v) => value = v)
+    await new Result(() => 1).ok((v) => (value = v))
 
     expect(value).toEqual(1)
   })

@@ -1,6 +1,6 @@
-import { assert, type Equals } from 'tsafe'
-import { all } from 'kavi/server/middleware'
-import { describe, it } from '../utils.types'
+import { assert, type Equals } from "tsafe"
+import { all } from "kavi/server/middleware"
+import { describe, it } from "../utils.types"
 
 describe("middleware.types use", () => {
   it("should overwrite old context", () => {
@@ -8,10 +8,7 @@ describe("middleware.types use", () => {
       .chain(() => ({ old: "old" }))
       .chain(() => ({ new: 1 }))
       .call((ctx) => {
-        assert<Equals<
-          typeof ctx,
-          { new: number }
-        >>()
+        assert<Equals<typeof ctx, { new: number }>>()
       })
   })
 
@@ -19,10 +16,7 @@ describe("middleware.types use", () => {
     all
       .chain(async () => ({ new: 1 }))
       .call((ctx) => {
-        assert<Equals<
-          typeof ctx,
-          { new: number }
-        >>()
+        assert<Equals<typeof ctx, { new: number }>>()
       })
   })
 })

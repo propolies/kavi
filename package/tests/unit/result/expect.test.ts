@@ -1,8 +1,8 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
-import { describe, expect, it, vi } from 'vitest'
-import { Result } from 'kavi'
+import { describe, expect, it } from "vitest"
+import { Result } from "kavi"
 
-describe('results expect', () => {
+describe("results expect", () => {
   it("should throw on any error", async () => {
     let error
     try {
@@ -20,7 +20,7 @@ describe('results expect', () => {
     try {
       await new Result(() => {
         throw 1
-      }).expect((e) => e as number + 2)
+      }).expect((e) => (e as number) + 2)
     } catch (e) {
       error = e
     }

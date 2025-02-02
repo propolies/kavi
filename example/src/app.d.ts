@@ -4,15 +4,15 @@ import type { WebSocketServer } from "ws"
 
 // for information about these interfaces
 declare global {
-	namespace App {
-		// interface Error {}
-		interface Locals {
+  namespace App {
+    // interface Error {}
+    interface Locals {
       wss: WebSocketServer
     }
-		// interface PageData {}
-		// interface PageState {}
-		// interface Platform {}
-	}
+    // interface PageData {}
+    // interface PageState {}
+    // interface Platform {}
+  }
 }
 
 export {}

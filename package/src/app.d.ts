@@ -10,7 +10,7 @@ declare global {
   }
   // only var works
   // eslint-disable-next-line no-var
-  var ctx: { event: RequestEvent } | undefined,
+  var ctx: { event: RequestEvent } | undefined
 }
 
 export {}

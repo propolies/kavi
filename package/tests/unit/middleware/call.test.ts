@@ -1,7 +1,7 @@
-import { describe, expect, it, vi } from 'vitest'
-import { all, Middleware } from 'kavi/server/middleware'
+import { describe, expect, it, vi } from "vitest"
+import { all, Middleware } from "kavi/server/middleware"
 
-describe('middleware call', () => {
+describe("middleware call", () => {
   it("should return", async () => {
     const res = await all.call(() => 1)()
     expect(res).toEqual(1)

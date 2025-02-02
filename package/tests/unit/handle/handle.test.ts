@@ -1,13 +1,13 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
-import { describe, expect, it, vi } from 'vitest'
-import { createHandle, all } from 'kavi/server'
-import { AnyError, createOptions } from 'kavi/index.js'
-import { z, ZodError } from 'zod'
+import { describe, expect, it, vi } from "vitest"
+import { createHandle, all } from "kavi/server"
+import { AnyError, createOptions } from "kavi/index.js"
+import { z, ZodError } from "zod"
 
 function createRequest(url: URL, data?: unknown) {
   return new Request(url, {
     method: "POST",
-    body: options.devalue.stringify(data)
+    body: options.devalue.stringify(data),
   })
 }
 
@@ -19,9 +19,9 @@ describe("handle", () => {
     const handle = createHandle({}, options)
     await handle({
       event: {
-        url: new URL("http:/localhost:4573/")
+        url: new URL("http:/localhost:4573/"),
       } as any,
-      resolve: resolveSpy
+      resolve: resolveSpy,
     })
 
     expect(resolveSpy).toHaveBeenCalledOnce()
@@ -35,7 +35,7 @@ describe("handle", () => {
       event: {
         url,
         request: createRequest(url),
-        cookies: {}
+        cookies: {},
       },
     } as any)
 
@@ -45,18 +45,21 @@ describe("handle", () => {
   it("should call the nested api", async () => {
     const url = new URL("http:/localhost:4573/kavi?api=lvl1.lvl2.lvl3")
     const routeSpy = vi.fn()
-    const handle = createHandle({
-      lvl1: {
-        lvl2: {
-          lvl3: routeSpy
-        }
-      }
-    }, options)
+    const handle = createHandle(
+      {
+        lvl1: {
+          lvl2: {
+            lvl3: routeSpy,
+          },
+        },
+      },
+      options,
+    )
     await handle({
       event: {
         url,
         request: createRequest(url),
-        cookies: {}
+        cookies: {},
       },
     } as any)
 
@@ -65,19 +68,20 @@ describe("handle", () => {
 
   it("should throw ZodError", async () => {
     const url = new URL("http:/localhost:4573/kavi?api=zod")
-    const handle = createHandle({
-      zod: all
-        .args(z.number())
-        .call(() => {})
-    }, options)
+    const handle = createHandle(
+      {
+        zod: all.args(z.number()).call(() => {}),
+      },
+      options,
+    )
 
     const res = await handle({
       event: {
         url,
         request: createRequest(url, "wrong"),
-        cookies: {}
+        cookies: {},
       } as any,
-      resolve: vi.fn()
+      resolve: vi.fn(),
     })
 
     const body = options.devalue.parse(await res.text())
@@ -86,19 +90,20 @@ describe("handle", () => {
 
   it("should work with args", async () => {
     const url = new URL("http:/localhost:4573/kavi?api=zod")
-    const handle = createHandle({
-      zod: all
-        .args(z.number())
-        .call((args) => args)
-    }, options)
+    const handle = createHandle(
+      {
+        zod: all.args(z.number()).call((args) => args),
+      },
+      options,
+    )
 
     const res = await handle({
       event: {
         url,
         request: createRequest(url, 1),
-        cookies: {}
+        cookies: {},
       } as any,
-      resolve: vi.fn()
+      resolve: vi.fn(),
     })
 
     const body = options.devalue.parse(await res.text())

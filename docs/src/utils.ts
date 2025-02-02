@@ -7,14 +7,7 @@ function CamelCase(str: string) {
 }
 
 function kebabCase(str: string) {
-  return str
-    .split(" ")
-    .map(String.prototype.toLowerCase)
-    .join("-")
+  return str.split(" ").map(String.prototype.toLowerCase).join("-")
 }
 
-export {
-  capitalize,
-  CamelCase,
-  kebabCase
-}
+export { capitalize, CamelCase, kebabCase }

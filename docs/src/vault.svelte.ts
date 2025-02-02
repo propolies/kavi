@@ -5,5 +5,5 @@ export const vault = {
   },
   set showVault(bool: boolean) {
     value = bool
-  }
+  },
 }

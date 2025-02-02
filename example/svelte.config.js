@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-node'
+import adapter from "@sveltejs/adapter-node"
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -10,9 +10,9 @@ const config = {
     // See https://kit.svelte.dev/docs/adapters for more information about adapters.
     adapter: adapter(),
     files: {
-      lib: "src"
-    }
-  }
+      lib: "src",
+    },
+  },
 }
 
 export default config

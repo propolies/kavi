@@ -1,11 +1,11 @@
-import type { Cookies } from '@sveltejs/kit'
-import type { CookieSerializeOptions } from 'cookie'
+import type { Cookies } from "@sveltejs/kit"
+import type { CookieSerializeOptions } from "cookie"
 
 type CookieOptions = CookieSerializeOptions & { path: string }
 
 interface Cookie {
-  name: string,
-  value: string,
+  name: string
+  value: string
   opts: CookieOptions
 }
 
@@ -26,15 +26,19 @@ export class CookiesProxy implements Cookies {
   }
 
   delete(name: string, opts: CookieOptions): void {
-    this.setCookies.push({ name, value: "", opts: {
-      ...opts,
-      maxAge: 0,
-    }})
+    this.setCookies.push({
+      name,
+      value: "",
+      opts: {
+        ...opts,
+        maxAge: 0,
+      },
+    })
   }
 
   getSetCookies(): string {
-    return this.setCookies.map(({ name, value, opts }) => (
-      this.serialize(name, value, opts)
-    )).join(",")
+    return this.setCookies
+      .map(({ name, value, opts }) => this.serialize(name, value, opts))
+      .join(",")
   }
 }

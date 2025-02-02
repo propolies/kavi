@@ -31,7 +31,7 @@ export class Result<T> {
   default<Value>(value: Value): Promise<T | Value> {
     return this.match({
       ok: (value) => value,
-      error: () => value
+      error: () => value,
     })
   }
 
@@ -45,9 +45,7 @@ export class Result<T> {
 
   async run(): Promise<[Awaited<T>, undefined] | [undefined, AnyError]> {
     const res = await this.runFn()
-    return isError(res)
-      ? [undefined, res]
-      : [res, undefined] as const
+    return isError(res) ? [undefined, res] : ([res, undefined] as const)
   }
 
   async expect(customError?: (error: unknown) => unknown) {
@@ -56,16 +54,11 @@ export class Result<T> {
     return res
   }
 
-  match<A, B>(opts: { ok: (value: T) => A, error: (err: AnyError) => B }): Promise<A | B>
+  match<A, B>(opts: { ok: (value: T) => A; error: (err: AnyError) => B }): Promise<A | B>
   match<A>(opts: { ok: (value: T) => A }): Promise<A | AnyError>
   match<B>(opts: { error: (err: AnyError) => B }): Promise<T | B>
-  async match<A, B>({ ok, error }: {
-    ok?: (value: T) => A,
-    error?: (err: AnyError) => B
-  }) {
+  async match<A, B>({ ok, error }: { ok?: (value: T) => A; error?: (err: AnyError) => B }) {
     const res = await this.runFn()
-    return isError(res)
-      ? error ? error(res) : res
-      : ok ? ok(res) : res
+    return isError(res) ? (error ? error(res) : res) : ok ? ok(res) : res
   }
 }

@@ -4,7 +4,9 @@
   import { CamelCase } from "$lib/utils"
   import Link from "./link.svelte"
 
-  let { onselect }: {
+  let {
+    onselect,
+  }: {
     onselect?: () => void
   } = $props()
 </script>
@@ -22,9 +24,9 @@
           onclick={onselect}
           href="/docs/{path}"
           class="hover:underline transition-all duration-100 py-1 {isActive
-            ? "text-gray-50 font-bold"
-            : "text-zinc-300 opacity-90"
-          }">
+            ? 'text-gray-50 font-bold'
+            : 'text-zinc-300 opacity-90'}"
+        >
           {CamelCase(subsection)}
         </Link>
       {/each}

@@ -19,19 +19,25 @@ export function createApiClient<T extends object>(options: Options) {
   })
 }
 
-function handleApply({ args, path, options }: {
-  args: unknown[],
-  path: string[],
+function handleApply({
+  args,
+  path,
+  options,
+}: {
+  args: unknown[]
+  path: string[]
   options: Options
 }) {
   const _fetch = globalThis.ctx?.event.fetch ?? fetch
-  return new Result(() => _fetch(`/kavi?api=${path.join(".")}`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: options.devalue.stringify(args[0])
-  }).then(async (res) => options.devalue.parse(await res.text())))
+  return new Result(() =>
+    _fetch(`/kavi?api=${path.join(".")}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: options.devalue.stringify(args[0]),
+    }).then(async (res) => options.devalue.parse(await res.text())),
+  )
 }
 
 export function initClientEvent(event: LoadEvent) {
@@ -39,6 +45,6 @@ export function initClientEvent(event: LoadEvent) {
 
   globalThis.ctx = {
     // @ts-expect-error Should find a better way to isole only fetch
-    event
+    event,
   }
 }

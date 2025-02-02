@@ -1,5 +1,5 @@
-import { RequestEvent } from '@sveltejs/kit'
-import { AsyncLocalStorage } from 'node:async_hooks'
+import { RequestEvent } from "@sveltejs/kit"
+import { AsyncLocalStorage } from "node:async_hooks"
 
 export const asyncLocalStorage = new AsyncLocalStorage()
 
@@ -14,5 +14,5 @@ export const ctx = {
     }
     // @ts-expect-error Can't be typed
     return store.event
-  }
+  },
 }
