@@ -4,8 +4,8 @@ import { describe, it } from "../utils.types"
 
 describe("middleware.types call", () => {
   it("should have default event as needs", () => {
-    const res = all.call(() => {})
+    const _res = all.call(() => {})
 
-    assert<Equals<typeof res, () => Promise<void>>>()
+    assert<Equals<typeof _res, () => Promise<void>>>()
   })
 })

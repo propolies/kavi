@@ -5,12 +5,12 @@ import z from "zod"
 
 describe("middleware.test args", () => {
   it("should get args types", () => {
-    const call = all.args(z.string()).call((args) => {
-      assert<Equals<typeof args, string>>()
+    const _call = all.args(z.string()).call((_args) => {
+      assert<Equals<typeof _args, string>>()
 
       return 1
     })
 
-    assert<Equals<typeof call, (args: string) => Promise<number>>>()
+    assert<Equals<typeof _call, (args: string) => Promise<number>>>()
   })
 })

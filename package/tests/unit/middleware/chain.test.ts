@@ -9,7 +9,7 @@ describe("middleware use", () => {
       return {}
     })
       .chain(async () => {
-        return new Promise<{}>((resolve) => {
+        return new Promise<Record<string, unknown>>((resolve) => {
           setTimeout(() => {
             calls.push(2)
             resolve({})

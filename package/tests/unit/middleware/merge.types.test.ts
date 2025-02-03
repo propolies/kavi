@@ -7,8 +7,8 @@ describe("middleware.types merge", () => {
     all
       .merge(() => ({ old: "old" }))
       .merge(() => ({ new: 1 }))
-      .call((ctx) => {
-        assert<Equals<typeof ctx, { old: string; new: number }>>()
+      .call((_ctx) => {
+        assert<Equals<typeof _ctx, { old: string; new: number }>>()
       })
   })
 
@@ -16,8 +16,8 @@ describe("middleware.types merge", () => {
     all
       .merge(async () => ({ old: 1 }))
       .merge(async () => ({ new: 2 }))
-      .call((ctx) => {
-        assert<Equals<typeof ctx, { old: number; new: number }>>()
+      .call((_ctx) => {
+        assert<Equals<typeof _ctx, { old: number; new: number }>>()
       })
   })
 })

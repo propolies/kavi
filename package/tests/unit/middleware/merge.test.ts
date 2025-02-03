@@ -9,7 +9,7 @@ describe("middleware merge", () => {
       return {}
     })
       .merge(async () => {
-        return new Promise<{}>((resolve) => {
+        return new Promise<Record<string, unknown>>((resolve) => {
           setTimeout(() => {
             calls.push(2)
             resolve({})

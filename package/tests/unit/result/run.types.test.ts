@@ -4,9 +4,9 @@ import { describe, it } from "../utils.types"
 
 describe("result.types run", () => {
   it("should work", async () => {
-    const [res, error] = await new Result<number>(() => 1).run()
+    const [_res, error] = await new Result<number>(() => 1).run()
 
-    assert<Equals<typeof res, number | undefined>>()
+    assert<Equals<typeof _res, number | undefined>>()
     assert<Equals<typeof error, AnyError | undefined>>()
 
     if (error) {
@@ -14,6 +14,6 @@ describe("result.types run", () => {
       return
     }
 
-    assert<Equals<typeof res, number>>()
+    assert<Equals<typeof _res, number>>()
   })
 })

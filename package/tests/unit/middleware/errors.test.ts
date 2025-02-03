@@ -12,7 +12,7 @@ describe("middleware errors", () => {
           throw 1
         })
         .call(spy)()
-    } catch (e) {
+    } catch {
       //
     }
     expect(spy).toHaveBeenCalledTimes(0)
@@ -27,7 +27,7 @@ describe("middleware errors", () => {
         })
         .args(z.null())
         .call(spy)(null)
-    } catch (e) {
+    } catch {
       //
     }
     expect(spy).toHaveBeenCalledTimes(0)
@@ -74,7 +74,7 @@ describe("middleware errors", () => {
           return {}
         })
         .call(vi.fn)()
-    } catch (e) {
+    } catch {
       //
     }
     expect(spy).toHaveBeenCalledTimes(0)
@@ -87,7 +87,7 @@ describe("middleware errors", () => {
         .args(z.string())
         // @ts-expect-error "Should fail"
         .call(spy)(1)
-    } catch (e) {
+    } catch {
       //
     }
     expect(spy).toHaveBeenCalledTimes(0)

@@ -31,7 +31,7 @@ describe("results expect", () => {
     let res
     try {
       res = await new Result(() => 1).expect()
-    } catch (e) {
+    } catch {
       //
     }
     expect(res).toEqual(1)

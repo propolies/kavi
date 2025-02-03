@@ -7,16 +7,16 @@ describe("middleware.types use", () => {
     all
       .chain(() => ({ old: "old" }))
       .chain(() => ({ new: 1 }))
-      .call((ctx) => {
-        assert<Equals<typeof ctx, { new: number }>>()
+      .call((_ctx) => {
+        assert<Equals<typeof _ctx, { new: number }>>()
       })
   })
 
   it("should work with async", () => {
     all
       .chain(async () => ({ new: 1 }))
-      .call((ctx) => {
-        assert<Equals<typeof ctx, { new: number }>>()
+      .call((_ctx) => {
+        assert<Equals<typeof _ctx, { new: number }>>()
       })
   })
 })

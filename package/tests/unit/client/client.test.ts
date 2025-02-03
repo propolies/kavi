@@ -15,8 +15,8 @@ describe("client.middleware", () => {
     }
 
     const mockEvent = {
-      fetch: ($: string, $$: any) => ({
-        then: ($: any) => {
+      fetch: (_: string, __: any) => ({
+        then: (_: any) => {
           // @ts-expect-error Should fail
           return router.test(1)
         },
