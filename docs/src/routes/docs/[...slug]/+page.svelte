@@ -1,11 +1,12 @@
 <script lang="ts">
   import Navigation from "./navigation.svelte"
-  import { page } from "$app/stores"
+  import { page } from "$app/state"
   import { capitalize } from "$lib/utils"
 
   let { data } = $props()
+  let Component = $derived(data.component)
 
-  const titleId = $derived($page.params.slug.split("/")[1])
+  const titleId = $derived(page.params.slug.split("/")[1])
   const title = $derived(capitalize(titleId.replaceAll("-", " ")))
 </script>
 
@@ -17,7 +18,8 @@
     {data.metadata.description}
   </p>
   <hr />
-  <svelte:component this={data.component} />
+
+  <Component />
   <hr style="margin-bottom: .8rem;" />
   <Navigation />
 </article>
