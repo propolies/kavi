@@ -4,6 +4,7 @@ import { mdsx } from "mdsx"
 import { mdsxConfig } from "./mdsx.config.js"
 import { readdirSync } from "fs"
 import { fileURLToPath } from "url"
+import { magicons } from "@magicons/core/plugins"
 import MagicString from "magic-string"
 const __dirname = fileURLToPath(new URL(".", import.meta.url))
 
@@ -16,7 +17,7 @@ const entries = readdirSync(__dirname + "/src/content").flatMap((folder) =>
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
-  preprocess: [mdsx(mdsxConfig), baseurl(), vitePreprocess()],
+  preprocess: [magicons(), mdsx(mdsxConfig), baseurl(), vitePreprocess()],
   extensions: [".svelte", ".md"],
   kit: {
     adapter: adapter(),

@@ -25,6 +25,8 @@
 </article>
 
 <style>
+  @reference "tailwindcss";
+
   .prose {
     hr {
       @apply my-8;

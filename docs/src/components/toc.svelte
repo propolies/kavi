@@ -34,7 +34,7 @@
 
 <nav
   id="toc"
-  class="text-gray-200 opacity-90 fixed h-[calc(100vh-theme(size.14))] flex-col stable hidden min-[900px]:flex py-8"
+  class="text-gray-200 opacity-90 fixed h-[calc(100vh-theme(size.14))] flex-col stable hidden min-[56.25rem]:flex py-8"
 >
   <a href={path} class="text-gray-400 mb-2"> On this page </a>
   {#each toc as [h2, h3s]}
