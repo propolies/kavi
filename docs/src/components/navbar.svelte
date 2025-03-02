@@ -1,8 +1,7 @@
 <script lang="ts">
-  import { Menu, X } from "@steeze-ui/lucide-icons"
   import Link from "./link.svelte"
   import Github from "./svg/github.svelte"
-  import { Icon } from "@steeze-ui/svelte-icon"
+  import { Icon } from "@magicons/core"
   import { vault } from "$lib/vault.svelte"
 </script>
 
@@ -25,7 +24,7 @@
       }}
       class="hover:text-white sm:hidden block"
     >
-      <Icon src={vault.showVault ? X : Menu} class="size-7" />
+      <Icon src={vault.showVault ? "@lucide-X" : "@lucide-Menu"} class="size-7" />
     </button>
   </span>
 </nav>
