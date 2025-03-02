@@ -1,8 +1,8 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
-import { describe, expect, it, vi } from 'vitest'
-import { Result } from 'kavi'
+import { describe, expect, it, vi } from "vitest"
+import { Result } from "kavi"
 
-describe('results match', () => {
+describe("results match", () => {
   it("should call error if error", async () => {
     const errorSpy = vi.fn()
     const okSpy = vi.fn()
@@ -10,7 +10,7 @@ describe('results match', () => {
       throw 1
     }).match({
       error: errorSpy,
-      ok: okSpy
+      ok: okSpy,
     })
 
     expect(errorSpy).toHaveBeenCalledOnce()
@@ -22,7 +22,7 @@ describe('results match', () => {
     const okSpy = vi.fn()
     await new Result(() => 1).match({
       error: errorSpy,
-      ok: okSpy
+      ok: okSpy,
     })
 
     expect(errorSpy).toHaveBeenCalledTimes(0)

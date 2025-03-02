@@ -1,63 +1,25 @@
-import { Vector } from "$lib/vector"
-import { middleware } from "kavi/server"
-import z from 'zod'
-import { UserSchema } from "./schemas"
+import { all, ctx } from "kavi/server"
+import z from "zod"
 
-const mw = middleware.use(() => {
-  if (Math.random() > .5) {
-    throw "nope"
-  }
-  return {
-    a: 1
-  }
-})
-
-export const apiRouter = {
-  ping: middleware
-    .call(() => {
-      console.log("[server] got ping")
-      return "pong"
-    }),
-  add: middleware
+export const router = {
+  divide: all
     .args(z.tuple([z.number(), z.number()]))
     .call(([a, b]) => {
-      return a + b
+      if (b == 0) throw new Error("Division by zero")
+      return a / b
     }),
-  cookie: {
-    add: middleware
-      .call(({ event }) => {
-        event.cookies.set("theCookie", "123", {
-          path: "/"
-        })
-      }),
-    delete: middleware
-      .call(({ event }) => {
-        event.cookies.delete("theCookie", {
-          path: "/"
-        })
-      })
-  },
-  crash: mw
-    .call(() => {
-      return "returned"
-    }),
-  custom: middleware
-    .call(() => {
-      return new Vector(1, 3)
-    }),
-  test: middleware
-    .args(z.string())
-    .call(() => {
-      return 1
-    }),
-  async: middleware
-    .call(async () => {
-      return 1
-    }),
-  formTest: middleware
-    .args(UserSchema)
-    .call(async (data) => {
-      console.log("data: ", data)
+  setCookie: all.call(() => {
+    ctx.event.cookies.set("cookie", "123", {
+      path: "/",
     })
+  }),
+  getCookie: all.call(() => {
+    return ctx.event.cookies.get("cookie")
+  }),
+  deleteCookie: all.call(() => {
+    ctx.event.cookies.delete("cookie", {
+      path: "/",
+    })
+  }),
 }
-export type Api = typeof apiRouter
+export type Router = typeof router

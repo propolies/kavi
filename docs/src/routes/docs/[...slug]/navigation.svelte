@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { base } from '$app/paths'
-  import { page } from '$app/stores'
-  import { sections } from '$lib/sections.js'
-  import { CamelCase } from '$lib/utils'
+  import { base } from "$app/paths"
+  import { page } from "$app/stores"
+  import { sections } from "$lib/sections.js"
+  import { CamelCase } from "$lib/utils"
   const [section, subsection] = $derived($page.params.slug.split("/"))
 
   function navigate(sign: 1 | -1): [string, string] | undefined {
@@ -28,12 +28,9 @@
   {@const navigation = navigate(sign)}
   {#if navigation}
     <a
-      href="{base}/docs/{navigation.join("/")}"
+      href="{base}/docs/{navigation.join('/')}"
       class="w-full hover:text-white group
-        {isNext
-          ? "col-start-2 place-self-end"
-          : "col-start-1"
-        }"
+        {isNext ? 'col-start-2 place-self-end' : 'col-start-1'}"
     >
       <div class:text-right={isNext}>
         <p class="text-gray-400">

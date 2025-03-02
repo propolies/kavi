@@ -1,53 +1,45 @@
-// @ts-check
-import js from '@eslint/js'
-import ts from 'typescript-eslint'
-import svelte from 'eslint-plugin-svelte'
-import globals from 'globals'
+import prettier from "eslint-config-prettier"
+import js from "@eslint/js"
+import { includeIgnoreFile } from "@eslint/compat"
+import svelte from "eslint-plugin-svelte"
+import globals from "globals"
+import { fileURLToPath } from "node:url"
+import ts from "typescript-eslint"
+const gitignorePath = fileURLToPath(new URL("./.gitignore", import.meta.url))
 
 export default ts.config(
+  includeIgnoreFile(gitignorePath),
   js.configs.recommended,
   ...ts.configs.recommended,
-  ...svelte.configs['flat/recommended'],
+  ...svelte.configs["flat/recommended"],
+  prettier,
+  ...svelte.configs["flat/prettier"],
+  {
+    rules: {
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        { varsIgnorePattern: "^_", argsIgnorePattern: "^_" },
+      ],
+    },
+  },
   {
     languageOptions: {
       globals: {
         ...globals.browser,
-        ...globals.node
-      }
-    }
+        ...globals.node,
+      },
+    },
   },
   {
-    files: ['**/*.svelte'],
+    files: ["**/*.svelte"],
+
     languageOptions: {
       parserOptions: {
-        parser: ts.parser
-      }
+        parser: ts.parser,
+      },
     },
     rules: {
-      "svelte/indent": "error",
-      "svelte/no-at-html-tags": "off"
-    }
-  },
-  {
-    rules: {
-      "no-trailing-spaces": "error",
-      "indent": ["error", 2, { "SwitchCase": 1 }],
-      '@typescript-eslint/no-unused-vars': ["warn", {
-        "varsIgnorePattern": "[$]*\\d*",
-        "argsIgnorePattern": "[$]+\\d*"
-      }],
-      "@typescript-eslint/semi": ["error", "never"],
-      "@typescript-eslint/ban-types": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-this-alias": "off",
-    }
-  },
-  {
-    ignores: [
-      "**/dist/*",
-      "**/build/*",
-      "**/node_modules/*",
-      "**/.svelte-kit/*",
-    ],
+      "svelte/no-at-html-tags": "off",
+    },
   },
 )

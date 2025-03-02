@@ -1,95 +1,58 @@
 <script lang="ts">
-  import "../../app.css"
-  import { api } from "$lib/kavi/client"
+  import { Icon } from "@magicons/core"
+  import { api } from "$lib/kavi/client.js"
+
+  let { data } = $props()
 </script>
 
-<main class="m-4 flex gap-4">
-  <button
-    onclick={async () => { console.log(await api.ping().ok()) }}
-    class="btn btn-accent"
-  >
-    Ping
-  </button>
+<div class="pt-8 relative flex text-white justify-center pb-32">
+  <div class="flex flex-col gap-6">
+    <a
+      href="/"
+      class="flex bg-white rounded p-2 items-center justify-between gap-4 w-fit text-black">
+      <Icon src="@lucide-ChevronLeft" />
+      <p class="mr-6">Back</p>
+    </a>
+    <h1 class="font-bold text-4xl">API Examples</h1>
+    <div class="flex flex-col gap-12">
+      <div class="flex flex-col">
+        <p class="text-lg w-lg">
+          First of all we will look at a generic endpoint for dividing two numbers and how to handle
+          the case of division by zero.
+        </p>
+      </div>
+      <div class="flex flex-col gap-4">
+        {@html data.example1.server}
+        {@html data.example1.client}
+        <div>
+          <button onclick={async () => console.log(await api.divide([6, 2]).ok())}>
+            {@html data.example1.snippet_a}
+          </button>
+          <button onclick={async () => console.log(await api.divide([6, 0]).ok())}>
+            {@html data.example1.snippet_b}
+          </button>
+        </div>
+      </div>
+      <div>
+        <button
+          onclick={async () => console.log(await api.setCookie().expect())}
+          class="rounded p-2 bg-gray-900 border border-white/10">Set Cookie</button>
+        <button
+          onclick={async () => console.log(await api.getCookie().expect())}
+          class="rounded p-2 bg-gray-900 border border-white/10">Get Cookie</button>
+        <button
+          onclick={async () => console.log(await api.deleteCookie().expect())}
+          class="rounded p-2 bg-gray-900 border border-white/10">Delete Cookie</button>
+      </div>
+      <div></div>
+    </div>
+  </div>
+</div>
 
-  <button
-    onclick={async () => { console.log(await api.add([1, 2]).ok()) }}
-    class="btn btn-accent"
-  >
-    Add 1 + 2
-  </button>
-  <button
-    onclick={async () => { console.log(await api.cookie.add().ok()) }}
-    class="btn btn-accent"
-  >
-    Add theCookie
-  </button>
-  <button
-    onclick={async () => { console.log(await api.cookie.delete().ok()) }}
-    class="btn btn-accent"
-  >
-    Delete theCookie
-  </button>
-</main>
+<style>
+  @reference "tailwindcss";
 
-<button
-  onclick={async () => {
-    const [res, error] = await api.crash().run()
-    if (error) {
-      console.log("error: ", error)
-    }
-    if (res) {
-      console.log("success: ", res)
-    }
-  }}
-  class="btn btn-accent"
->
-  run Error
-</button>
-
-<button
-  onclick={async () => {
-    await api.crash().match({
-      ok(res) {
-        console.log("success: ", res)
-      },
-      error(e) {
-        console.log("error: ", e)
-      }
-    })
-  }}
-  class="btn btn-accent"
->
-  match Error
-</button>
-
-<button
-  onclick={async () => {
-    console.log(await api.custom().ok())
-  }}
-  class="btn btn-accent"
->
-  Custom Object
-</button>
-
-<button
-  onclick={async () => {
-    await api.async().ok((data) => {
-      console.log(data)
-    })
-  }}
-  class="btn btn-accent"
->
-  Async call
-</button>
-
-<button
-  onclick={async () => {
-    // @ts-expect-error "Should error"
-    const [res, err] = await api.test(1).run()
-    console.log("res", res)
-    console.log("err", err)
-  }}
-  class="btn btn-accent"
->
-  test
-</button>
+  :global(pre) {
+    @apply rounded p-2 !bg-gray-900 border border-white/10;
+  }
+</style>

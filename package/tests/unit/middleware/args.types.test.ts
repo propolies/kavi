@@ -1,30 +1,16 @@
-/* eslint @typescript-eslint/no-unused-vars: 0 */
-import { assert, Equals } from 'tsafe'
-import { middleware } from 'kavi/server/middleware'
-import { describe, it } from '../utils.types'
-import z from 'zod'
-import { RequestEvent } from '@sveltejs/kit'
+import { assert, Equals } from "tsafe"
+import { all } from "kavi/server/middleware"
+import { describe, it } from "../utils.types"
+import z from "zod"
 
 describe("middleware.test args", () => {
   it("should get args types", () => {
-    const call = middleware
-      .args(z.string()).call((args, ctx) => {
-        assert<Equals<
-          typeof args,
-          string
-        >>()
+    const _call = all.args(z.string()).call((_args) => {
+      assert<Equals<typeof _args, string>>()
 
-        assert<Equals<
-          typeof ctx,
-          { event: RequestEvent }
-        >>()
+      return 1
+    })
 
-        return 1
-      })
-
-    assert<Equals<
-      typeof call,
-      (args: string, needs: { event: RequestEvent }) => Promise<number>
-    >>()
+    assert<Equals<typeof _call, (args: string) => Promise<number>>>()
   })
 })

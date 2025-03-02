@@ -1,27 +1,23 @@
-import { defineConfig } from 'mdsx'
+import { defineConfig } from "mdsx"
 import { visit } from "unist-util-visit"
-import { rehypeCustomHighlight } from '@mdsx/rehype-custom-highlighter'
-import MagicString from 'magic-string'
-import rehypeSlug  from 'rehype-slug'
-import { highlight } from './src/shiki.js'
+import { rehypeCustomHighlight } from "@mdsx/rehype-custom-highlighter"
+import MagicString from "magic-string"
+import rehypeSlug from "rehype-slug"
+import { highlight } from "./src/shiki.js"
 
 /** @type {import('@mdsx/rehype-custom-highlighter').HighlightOptions} */
 export const customHighlightOptions = {
-  highlight
+  highlight,
 }
 
 export const mdsxConfig = defineConfig({
-  extensions: ['.md'],
-  rehypePlugins: [
-    [rehypeCustomHighlight, customHighlightOptions],
-    [rehypeFormat],
-    [rehypeSlug]
-  ],
+  extensions: [".md"],
+  rehypePlugins: [[rehypeCustomHighlight, customHighlightOptions], [rehypeFormat], [rehypeSlug]],
   blueprints: {
     default: {
-      path: 'src/blueprints/blueprint.svelte'
-    }
-  }
+      path: "src/blueprints/blueprint.svelte",
+    },
+  },
 })
 
 /**
@@ -35,8 +31,7 @@ export const mdsxConfig = defineConfig({
 function rehypeFormat() {
   return async (tree) => {
     visit(tree, "element", (node) => {
-      if (node.tagName !== "pre")
-        return
+      if (node.tagName !== "pre") return
 
       const meta = node.children[0].data?.meta
       if (!meta) return

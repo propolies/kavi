@@ -1,17 +1,39 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* html {
-  scroll-behavior: smooth !important;
-} */
+@plugin '@tailwindcss/typography';
+
+/*
+  The default border color has changed to `currentColor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentColor);
+  }
+}
 
 html {
-  @apply bg-zinc-900;
+  scroll-behavior: smooth !important;
+}
+
+html {
+  @apply bg-gray-900;
 }
 
 .prose code:not(pre > code) {
-  @apply px-1.5 py-1 text-slate-200 rounded bg-[#24292e];
+  @apply px-1.5 py-1 text-slate-200 rounded-sm bg-gray-800;
+}
+
+.prose pre {
+  @apply !bg-gray-800/40 !text-white border border-white/5;
 }
 
 .prose code:not(pre > code)::before,
@@ -24,12 +46,13 @@ html {
   @apply hidden;
 }
 
+/* html, */
 .stable {
   scrollbar-gutter: stable;
 }
 
-html {
-  @apply stable;
+.file {
+  @apply mb-3 text-slate-400;
 }
 
 html :has(.body-overflow-hidden) {
@@ -43,12 +66,12 @@ html :has(.body-overflow-hidden) {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  @apply bg-zinc-800 rounded;
+  @apply bg-zinc-800 rounded-sm;
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  @apply bg-zinc-500 rounded;
+  @apply bg-zinc-500 rounded-sm;
 }
 
 /* Handle on hover */

@@ -1,8 +1,8 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
-import { describe, expect, it } from 'vitest'
-import { AnyError, Result } from 'kavi'
+import { describe, expect, it } from "vitest"
+import { AnyError, Result } from "kavi"
 
-describe('results run', () => {
+describe("results run", () => {
   it("should return the error", async () => {
     const [value, e] = await new Result(() => {
       throw 1

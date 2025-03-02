@@ -4,7 +4,10 @@ import { AnyError } from "kavi/result"
 import { describe, expect, it } from "vitest"
 
 class Vector {
-  constructor(public x: number, public y: number) {}
+  constructor(
+    public x: number,
+    public y: number,
+  ) {}
 }
 
 describe("devalue", () => {
@@ -15,8 +18,8 @@ describe("devalue", () => {
           .stringify((value) => {
             return value instanceof Vector && [value.x, value.y]
           })
-          .parse((coords) => new Vector(...coords))
-      }
+          .parse((coords) => new Vector(...coords)),
+      },
     })
 
     const stringed = devalue.stringify(new Vector(1, 2))

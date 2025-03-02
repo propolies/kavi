@@ -1,27 +1,31 @@
 /* eslint @typescript-eslint/no-explicit-any: 0 */
-import { describe, expect, it, vi } from 'vitest'
-import { AnyError, Result } from 'kavi'
+import { describe, expect, it, vi } from "vitest"
+import { AnyError, Result } from "kavi"
 
-describe('results error', () => {
+describe("results error", () => {
   it("should return error by default", async () => {
-    const err = await new Result(vi.fn(() => {
-      throw 1
-    })).error()
+    const err = await new Result(
+      vi.fn(() => {
+        throw 1
+      }),
+    ).error()
     expect(err).toEqual(new AnyError(1))
   })
 
   it("should call error if error", async () => {
     const spy = vi.fn()
-    await new Result(vi.fn(() => {
-      throw 1
-    })).error(spy)
+    await new Result(
+      vi.fn(() => {
+        throw 1
+      }),
+    ).error(spy)
 
     expect(spy).toHaveBeenCalledOnce()
   })
 
   it("should not call error if ok", async () => {
     const spy = vi.fn()
-    await new Result((vi.fn())).error(spy)
+    await new Result(vi.fn()).error(spy)
 
     expect(spy).toHaveBeenCalledTimes(0)
   })
@@ -39,7 +43,7 @@ describe('results error', () => {
     let err: any = null
     await new Result(() => {
       throw 1
-    }).error((e) => err = e)
+    }).error((e) => (err = e))
 
     expect(err).toEqual(new AnyError(1))
   })

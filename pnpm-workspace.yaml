@@ -1,5 +1,6 @@
 packages:
   - "./package/**"
   - "./example/**"
+  - "./example2/**"
   - "./docs/**"
-  - "./tests**"
+  - "./tests/**"

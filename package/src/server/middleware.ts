@@ -1,49 +1,67 @@
-import type { RequestEvent } from "@sveltejs/kit"
-import type { MaybePromise } from "../types.js"
-import type * as Z from 'zod'
+import type { Dict, MaybePromise } from "../types.js"
+import type { z } from "zod"
 
-export class Middleware<
-  Context extends Record<string, unknown>,
-  Needs extends object
-> {
-  constructor(private getContext: (event: Needs) => MaybePromise<Context>) {}
+export class Middleware<Ctx extends Dict> {
+  constructor(public run: () => MaybePromise<Ctx>) {}
 
-  use<NewContext extends Record<string, unknown>>(
-    createContext: (context: Context) => MaybePromise<NewContext>
-  ): Middleware<NewContext, Needs> {
-    const { getContext } = this
-    return new Middleware(
-      async (needs: Needs) => {
-        return createContext(await getContext(needs))
-      }
-    )
+  chain = <NewCtx extends Dict>(newRun: (ctx: Ctx) => MaybePromise<NewCtx>): Middleware<NewCtx> => {
+    const { run } = this
+    return new Middleware(async () => newRun(await run()))
   }
 
-  args<S extends Z.Schema>(schema: S) {
-    type Args = Z.infer<S>
+  merge = <NewCtx extends Dict>(
+    newRun: (ctx: Ctx) => MaybePromise<NewCtx>,
+  ): Middleware<Ctx & NewCtx> => {
+    const { run } = this
+    return new Middleware(async () => {
+      const ctx = await run()
+      const newCtx = await newRun(ctx)
+      return {
+        ...ctx,
+        ...newCtx,
+      }
+    })
+  }
+
+  returns = <Schema extends z.Schema>(schema: Schema) => {
+    type Returns = z.infer<Schema>
     return {
-      call: <Return>(fn: (args: Args, context: Context & Needs) => Return) => {
-        return async (args: Args, needs: Needs) => {
-          const parsedArgs = schema.parse(args)
-          const result = await this.getContext(needs)
-          return fn(parsedArgs as Args, {
-            ...needs,
-            ...result
-          })
-        }
-      }
+      call: async (fn: (ctx: Ctx) => Returns) => {
+        const result = await fn(await this.run())
+        const parsedResult = schema.parse(result) as Returns
+        return parsedResult
+      },
     }
   }
 
-  call<Return>(fn: (context: Context & Needs) => Return) {
-    return async (needs: Needs) => {
-      const ctx = await this.getContext(needs)
-      return fn({
-        ...needs,
-        ...ctx
-      })
+  args = <Schema extends z.Schema>(schema: Schema) => {
+    type Args = z.infer<Schema>
+    return {
+      returns: <Schema extends z.Schema>(schema: Schema) => {
+        type Returns = z.infer<Schema>
+        return {
+          call: (fn: (args: Args, ctx: Ctx) => Returns) => {
+            return async (args: Args) => {
+              const parsedArgs = schema.parse(args) as Args
+              const result = await fn(parsedArgs, await this.run())
+              const parsedResult = schema.parse(result) as Returns
+              return parsedResult
+            }
+          },
+        }
+      },
+      call: <Return>(fn: (args: Args, ctx: Ctx) => Return) => {
+        return async (args: Args) => {
+          const parsedArgs = schema.parse(args)
+          return fn(parsedArgs as Args, await this.run())
+        }
+      },
     }
+  }
+
+  call = <Return>(fn: (ctx: Ctx) => Return) => {
+    return async () => fn(await this.run())
   }
 }
 
-export const middleware = new Middleware((needs: { event: RequestEvent }) => needs)
+export const all = new Middleware(() => ({}))

@@ -3,17 +3,18 @@ description: Handle forms with ease.
 ---
 
 ## Example
+
 ```svelte
 <script lang="ts">
-  import { Form } from 'kavi/client'
-  import { api } from '$lib/kavi/client'
-  import z from 'zod'
+  import { Form } from "kavi/client"
+  import { api } from "$lib/kavi/client"
+  import z from "zod"
 
   const form = Form(api.route, {
     schema: z.object({
       name: z.string(),
-      age: z.number().min(18)
-    })
+      age: z.number().min(18),
+    }),
   })
 </script>
 
@@ -32,26 +33,31 @@ description: Handle forms with ease.
 ```
 
 ## Submitting data
+
 Often data in inputs/forms is not exactly what we want to forward to the api. Instead we can use `beforeSubmit` on the `Form` options.
 
 ```ts
 Form(api.route, {
   schema: {
     x: z.number(),
-    y: z.number()
+    y: z.number(),
   },
-  beforeSubmit: (fields) => new Vector(x, y)
+  beforeSubmit: (fields) => new Vector(x, y),
 })
 ```
+
 This is identical to
+
 ```ts
 api.route(new Vector(x, y))
 ```
 
 ## Errors
+
 The `KaviForm` which is returned from `Form` has the property `errors`. This is used to check which field errors we have.
 
 To throw your custom errors on the server
+
 ```ts
 import { formError } from 'kavi/client'
 
@@ -60,7 +66,8 @@ middleware.call(() => throw fromError({
 }))
 ```
 
-To throw your custom errors on the client
+To set your custom errors on the client
+
 ```ts
 import { formError } from 'kavi/client'
 
@@ -71,4 +78,5 @@ form.errors = formError({
 ```
 
 ### Autofocus errors
+
 To autofocus the first error in a form use `aria-invalid`.
