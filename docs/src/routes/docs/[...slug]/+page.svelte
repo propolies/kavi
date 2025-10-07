@@ -10,7 +10,7 @@
   const title = $derived(capitalize(titleId.replaceAll("-", " ")))
 </script>
 
-<article class="prose overflow-hidden prose-invert w-full m-8 pb-8 px-6 mx-0">
+<article class="prose overflow-hidden prose-invert w-full m-8 pb-8 px-6 mx-0 [&>hr]:my-8">
   <h1 class="mb-0" id={titleId}>
     {title}
   </h1>
@@ -20,20 +20,12 @@
   <hr />
 
   <Component />
-  <hr style="margin-bottom: .8rem;" />
+  <hr class="!mb-[.8rem]" />
   <Navigation />
 </article>
 
 <style>
-  @reference "tailwindcss";
-
-  .prose {
-    hr {
-      @apply my-8;
-    }
-  }
-
-  :global(h1, h2, h3, h4) {
+  :global(h1, h2, h3) {
     scroll-margin-top: 5rem;
   }
 </style>

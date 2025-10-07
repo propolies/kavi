@@ -16,7 +16,7 @@
       }
     },
     {
-      "files": ["**/kavi/**/*"],
+      "files": ["**/kavi/**/*", "./docs/src/content/**/*.md"],
       "options": {
         "printWidth": 60
       }

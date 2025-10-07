@@ -1,8 +1,4 @@
----
-description: Nesting is an optional feature for organizing the API.
----
-
-Not really a recommended approach as it can be hard to maintain. But if you wish you can nest the API as deep as needed.
+Routes can be nested as much as you want.
 
 ```ts file=server.ts
 export const router = {

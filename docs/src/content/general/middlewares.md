@@ -1,8 +1,8 @@
 ---
-description: Middlewares are functions that are called on each call
+description: Functions called on each api call
 ---
 
-The easiest way to make new middleware is combining the default middleware `all` with [.chain](#chain) or [.merge](#merge).
+Make new middlewares by [chaining](#chain) or [merging](#merge) the default middleware `all`.
 
 ```ts
 import { all } from "kavi/server"
@@ -21,7 +21,7 @@ mw.call((ctx) => ...)
 
 ## Chain
 
-Chaining will call all the previous middlewares in the "chain", only the latest returned context will be available. To have all context of the previous middlewares use [merge](#merge)
+Chaining will call all the previous middlewares in the "chain", only the latest returned context will be available.
 
 ```ts
 import { all } from "kavi/server"
@@ -35,12 +35,6 @@ const mw = all
   })
 ```
 
-The returned context will be available to all calls like
-
-```ts
-mw.call((ctx) => ...)
-```
-
 ## Merge
 
-Merging will call all the previous middlewares in the "chain", all context of the previous middlewares will be available.
+Merging will call all the previous middlewares in the "chain", and merge the context.

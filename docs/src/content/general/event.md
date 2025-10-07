@@ -1,15 +1,13 @@
 ---
-description:
+description: The SvelteKit RequestEvent
 ---
-
-To get the event context which is normally forwarded from either `hooks.server.ts` or any `load functions`.
 
 ## Getting The Event Context
 
-We can get the `event` context everywhere in the scope of the `hooks.server.ts` by importing it from **Kavi**.
+We can get the `event` context everywhere in the scope of `hooks.server.ts`.
 
 ```ts
-import { all, ctx } from "kavi"
+import { all, ctx } from "kavi/server"
 
 const user = all.chain(() => {
   const session = ctx.event.cookies.get("user")
@@ -20,4 +18,4 @@ const user = all.chain(() => {
 })
 ```
 
-> Accessing the `ctx` object should of course only be done on the **server**.
+> `ctx` can only be accesed on the server.

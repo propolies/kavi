@@ -4,7 +4,7 @@ description:
 
 ## Args
 
-To accept arguments we need to use `.args` which takes a `zod` object so we can validate the input.
+To accept arguments—use `.args` which takes a `zod` object that validates the input on the server.
 
 ```ts
 import { all } from 'kavi/server'
@@ -24,9 +24,11 @@ import { all } from "kavi/server"
 import z from "zod"
 
 export const router = {
-  add: all.args(z.tuple([z.number(), z.number()])).call(([a, b]) => {
-    return a + b
-  }),
+  add: all
+    .args(z.tuple([z.number(), z.number()]))
+    .call(([a, b]) => {
+      return a + b
+    }),
 }
 ```
 
@@ -38,8 +40,7 @@ export const router = {
 <button
   onclick={async () => {
     const result = await api.add([1, 2]).ok()
-  }}
->
+  }}>
   Add two numbers on the server
 </button>
 ```

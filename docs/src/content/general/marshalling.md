@@ -4,7 +4,7 @@ description: Serializing and deserializing data
 
 ## Handling arbitrary data
 
-Since everything sent over the wire are basically strings, we can't send anything and get it returned the same. I.e `Date` will lose it's structure once converted to `string`.
+Since everything sent over the wire is basically strings, we can't send anything and get it returned the same. I.e `Date` will lose it's structure once converted to a `string`.
 
 ```ts
 const date = new Date()
@@ -49,8 +49,8 @@ We have now made sure that both server and client agree on how to handle `Date`.
 Since **sveltekit 2.11.0** you can also make the marshalling work for returned data in `load functions` you need to add the devalue options to
 
 ```ts file=hooks.ts
-import { ??? } from './kavi/options'
+import { options } from './kavi/options'
 import type { Transport } from '@sveltejs/kit'
 
-export const transport: Transport = ???
+export const transport: Transport = // coming soon
 ```

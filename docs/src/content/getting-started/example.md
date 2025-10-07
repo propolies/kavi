@@ -1,8 +1,8 @@
 ---
-description: Get started with the api
+description:
 ---
 
-To write your first api with Kavi you need a [middleware](/docs/general/middlewares), for this example just use the default one Kavi exports.
+A [middleware](/docs/general/middlewares) is the core for any api.
 
 ```ts file=server.ts
 import { all } from "kavi/server"
@@ -14,7 +14,7 @@ export const router = {
 }
 ```
 
-Here's where it gets powerful, as we get **end to end typesafety**.
+Here is where it gets powerful, as we get **end to end typesafety** instanly with no build step.
 
 ```svelte file=+page.svelte
 <script lang="ts">
@@ -24,8 +24,7 @@ Here's where it gets powerful, as we get **end to end typesafety**.
 <button
   onclick={async () => {
     await api.hello().ok()
-  }}
->
+  }}>
   Say hello to server!
 </button>
 ```

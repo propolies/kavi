@@ -12,6 +12,7 @@
   const toc: [string, string[]][] = $state([])
 
   $effect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     path
     untrack(() => {
       toc.length = 0
@@ -34,8 +35,7 @@
 
 <nav
   id="toc"
-  class="text-gray-200 opacity-90 fixed h-[calc(100vh-theme(size.14))] flex-col stable hidden min-[56.25rem]:flex py-8"
->
+  class="text-gray-200 opacity-90 fixed h-[calc(100vh-theme(size.14))] flex-col stable hidden min-[56.25rem]:flex py-8 [&_a]:hover:underline">
   <a href={path} class="text-gray-400 mb-2"> On this page </a>
   {#each toc as [h2, h3s]}
     <a href="{path}#{h2}" class="text-sm my-1">
@@ -50,9 +50,3 @@
     </div>
   {/each}
 </nav>
-
-<style>
-  a {
-    @apply hover:underline;
-  }
-</style>

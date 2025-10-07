@@ -1,5 +1,4 @@
 import { initClientEvent } from "kavi/client"
 
-export const load = (event) => {
-  initClientEvent(event)
-}
+// important that this runs first
+export const load = initClientEvent
